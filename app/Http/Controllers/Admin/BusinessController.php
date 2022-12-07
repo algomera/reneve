@@ -92,7 +92,9 @@ class BusinessController extends Controller
         $validateBusiness['subdomain'] = $subdomain;
 
         $business = Business::create($validateBusiness);
-        $business->providers()->attach($validateProvider['providers']);
+        if ($validateProvider) {
+            $business->providers()->attach($validateProvider['providers']);
+        }
 
         if (array_key_exists('logo', $validateBusiness)) {
             $file_path = Storage::disk('public')->put('business-'. $business->id . '/' . 'Logo', $validateBusiness['logo']);
@@ -217,18 +219,12 @@ class BusinessController extends Controller
     public function destroy($id, Request $request)
     {
         $business = Business::withTrashed()->find($id);
-        $users = $business->user()->wherePivot('business_id', $business->id)->get()->pluck('id');
 
         if ($request->hard) {
             $business->forceDelete();
-            // foreach ($users as $user) {
-            //     $business->user()->wherePivot('user_id', $user)->forceDelete();
-            // }
+            Storage::disk('public')->deleteDirectory('business-'.$id);
         } else {
             $business->delete();
-            // foreach ($users as $user) {
-            //     $business->user()->wherePivot('user_id', $user)->delete();
-            // }
         }
         return redirect()->route('business.index')->with('message', $request->hard ? "L'azienda è stata eliminata definitivamente!" : "L'azienda è stata eliminata!");
     }
