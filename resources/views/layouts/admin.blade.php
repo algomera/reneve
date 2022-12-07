@@ -13,13 +13,22 @@
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
 
     @yield('css')
+
     <!-- Scripts -->
-    <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};</script>
+    <script>
+        window.Laravel = @json( ['csrf_token' => csrf_token(),'csrfToken' => csrf_token()] )
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
 <body class="font-sans antialiased">
+    @if($errors->all())
+        @foreach ($errors->all() as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    @endif
+
     <div class="min-h-screen bg-gray-100">
         @include('layouts.admin_navigation')
 

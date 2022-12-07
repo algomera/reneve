@@ -6,9 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class WarehouseController extends Controller
 {
+
+    private function getProductButtons(Product $product) {
+        $id = $product->id;
+
+        $buttonShow =
+            '<a href="'.route('warehouse.show', $id).'" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
+                <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
+            </a>';
+
+        $buttonEdit =
+            '<a href="'.route('warehouse.edit', $id).'" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
+                <i class="fa-solid fa-pen-to-square text-yellow-500 group-hover:text-white"></i>
+            </a>';
+
+        $buttonDelete =
+            '<button type="button" href="'.route('warehouse.destroy', $id).'" title="delete" class="ajax grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group">
+                <i class="fa-solid fa-trash text-red-500 group-hover:text-white"></i>
+            </button>';
+
+        return $buttonShow.$buttonEdit.$buttonDelete;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,17 +39,23 @@ class WarehouseController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        if($request->get('perPage')) {
-            $perPage = $request->get('perPage');
-        }
-        if ($perPage == 'Tutti') {
-            $products = Product::all();
-        } else {
-            $products = Product::paginate($perPage);
+        if ($request->ajax()) {
+            $data = Product::select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    return
+                    '<div class="flex shrink gap-1">
+                        '.$this->getProductButtons($data).'
+                    </div>';
+                })->editColumn('price_visible', function($data){
+                    return $data->price_visible == 1 ? 'Si' : 'No';
+                })->editColumn('discount', function($data){
+                    return $data->discount . '%';
+                })->rawColumns(['action'])->make(true);
         }
 
-        return view('admin.warehouse.index', compact('products', 'perPage'));
+        return view('admin.warehouse.index');
     }
 
     /**
@@ -77,6 +106,7 @@ class WarehouseController extends Controller
      */
     public function show($id)
     {
+
         $product = Product::find($id);
 
         return view('admin.warehouse.show', compact('product'));

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
             $table->text('notes')->nullable();
-            $table->float('amount', 7, 2);
             $table->string('status')->default('ricevuto');
-            $table->timestamps();
+            $table->string('payment')->default('');
+            $table->timestamps('');
         });
     }
 

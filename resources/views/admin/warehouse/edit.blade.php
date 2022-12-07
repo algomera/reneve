@@ -5,7 +5,7 @@
     <div class="w-[90%] mx-auto">
         <div class="flex justify-between items-center">
             <h1 class="text-3xl font-semibold mb-5">{{$product->name}}</h1>
-            <a href="{{route('warehouse.index')}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+            <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
         </div>
 
         <form action="{{Route('warehouse.update', $product->id)}}" method="post" class="flex bg-white p-5 shadow-lg relative">

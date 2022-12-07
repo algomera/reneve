@@ -13,7 +13,7 @@
                     <p>Azienda ordinante: <strong class="tracking-[0.5px]">{{$order->business->business}}</strong></p>
                     <p>P.IVA: <strong class="tracking-[0.75px]">{{$order->business->p_iva_business}}</strong></p>
                 </div>
-                <a href="{{route('order.index')}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+                <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
             </div>
 
             <h4 class="text-lg font-semibold">Note:</h4>
@@ -26,8 +26,8 @@
             </div>
             <h3 class="text-2xl font-semibold mt-3 mb-[-45px] uppercase">Prodotti in Ordine</h3>
 
-            <table id="orderTable" class="w-full table-auto text-white shadow-2xl cell-border display">
-                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/90">
+            <table id="orderTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
+                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
                     <tr>
                         <th class="text-start p-2">ID</th>
                         <th class="text-start p-2">REF</th>
@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $pr )
-                        <tr class="odd:bg-gray-900/80 even:bg-gray-900/70">
+                        <tr class="odd:bg-gray-600/50 even:bg-gray-600/100">
                             <td>{{$pr->id}}</td>
                             <td>{{$pr->ref}}</td>
                             <td>{{$pr->business->business}}</td>
@@ -53,7 +53,7 @@
                 </tbody>
             </table>
             <div class="w-full flex justify-end mt-2">
-                <p class="text-[21px]"><strong>Totale Ordine: </strong> € {{$order->products->sum('price')}}</p>
+                <p class="text-[21px]"><strong>Totale Ordine: </strong> € {{$order->products()->withTrashed()->sum('price')}}</p>
             </div>
         </div>
     </div>
@@ -63,7 +63,11 @@
     <script type="module">
         $(document).ready( function () {
             $('#orderTable').DataTable({
-                "bPaginate":false, "bInfo":false
+                "bPaginate":false,
+                "bInfo":false,
+                "oLanguage": {
+                    "sZeroRecords": "Nessun risultato trovato!",
+                },
             });
             $('.dataTables_filter').addClass('mb-[15px]')
         } );

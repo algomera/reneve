@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('business_id')->constrained('businesses');
+            $table->string('type')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
             $table->smallInteger('duration')->nullable();
             $table->float('price', 6, 2);
-            $table->boolean('avaiable')->default(true);
             $table->timestamps();
         });
     }

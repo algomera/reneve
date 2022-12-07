@@ -23,13 +23,13 @@
                 <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
                     <tr>
                         <th class="text-start p-2">Id</th>
-                        <th class="text-start p-2">Name</th>
-                        <th class="text-start p-2">Type</th>
+                        <th class="text-start p-2">Nome</th>
+                        <th class="text-start p-2">Tipo</th>
                         <th class="text-start p-2">Email</th>
-                        <th class="text-start p-2">Phone</th>
-                        <th class="text-start p-2">Mobile Phone</th>
-                        <th class="text-start p-2">Created</th>
-                        <th class="text-start p-2">Delete</th>
+                        <th class="text-start p-2">Telefono</th>
+                        <th class="text-start p-2">Cellulare</th>
+                        <th class="text-start p-2">Creata</th>
+                        <th class="text-start p-2">Eliminata</th>
                         <th class=" min-w-[120px]">&nbsp;</th>
                     </tr>
                 </thead>

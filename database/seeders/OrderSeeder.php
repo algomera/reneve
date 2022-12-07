@@ -15,11 +15,26 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 50; $i++) {
+        $pay = [
+            'bonifico' => 'bonifico',
+            'contanti' => 'contanti',
+            'rate' => 'rate',
+        ];
+
+        $state = [
+            'ricevuto' => 'ricevuto',
+            'evaso' => 'evaso',
+            'in lavorazione' => 'in lavorazione',
+            'annullato' => 'annullato',
+        ];
+
+        for ($i=0; $i < 100; $i++) {
             for ($m=0; $m < 10 ; $m++) {
                 Order::create([
                     'business_id' => rand(1, 50),
-                    'amount' => fake()->randomFloat(2, 500, 5000),
+                    'notes' => fake()->paragraph(),
+                    'status' => array_rand($state),
+                    'payment' => array_rand($pay),
                 ]);
             }
         }

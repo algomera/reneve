@@ -86,8 +86,8 @@ class Business extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function provider() {
-        return $this->hasMany(Provider::class);
+    public function providers() {
+        return $this->belongsToMany(Provider::class)->withPivot('available', 'price');
     }
 
     public function cabin() {

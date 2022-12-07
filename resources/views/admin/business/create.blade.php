@@ -5,13 +5,13 @@
     <div class="w-[90%] mx-auto">
         <div class="flex justify-between items-center">
             <h1 class="text-3xl font-semibold mb-5">Nuova Azienda</h1>
-            <a href="{{route('business.index')}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+            <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
         </div>
 
         <form action="{{Route('business.store')}}" method="post" enctype="multipart/form-data" class="flex bg-white p-5 shadow-lg relative">
             @csrf
             <input hidden type="text" name="role" id="role" value="{{'business'}}">
-            <div class="w-1/2 pr-5">
+            <div class="w-3/5 pr-5">
                 <h3 class="text-lg font-semibold mb-5">Azienda</h3>
 
                 <div class="flex gap-3 mt-4">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="w-1/2">
                         <x-input-label for="logo" :value="__('Logo')" />
-                        <input id="logo" class="block mt-2 w-full" type="file" name="logo" :value="old('logo')" />
+                        <input id="logo" class="block mt-1 w-full !bg-transparent" type="file" name="logo" :value="old('logo')" />
                         <x-input-error :messages="$errors->get('Logo')" class="mt-2" />
                     </div>
                 </div>
@@ -92,9 +92,21 @@
                         <x-input-error :messages="$errors->get('end_contract')" class="mt-2" />
                     </div>
                 </div>
+
+                <h3 class="text-lg font-semibold mt-7 mb-5">Servizi associati</h3>
+
+                <div class="flex flex-col flex-wrap min-h-[350px] max-h-[350px] gap-5">
+                    @foreach ($providers as $pv )
+                        <div class="flex gap-3">
+                            <input type="checkbox" id="{{'provider-'.$pv->id}}" name="providers[]" value="{{$pv->id}}">
+                            <x-input-label :for="$pv->id" :value="$pv->name" class="font-bold capitalize" />
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
-            <div class="w-1/2 border-l pl-5">
+            {{-- User Date --}}
+            <div class="w-2/5 border-l pl-5">
                 <h3 class="text-lg font-semibold mb-5">Titolare/Legale rappresentante</h3>
                 <div class="flex gap-3">
                     <div class="w-1/2">
@@ -130,12 +142,12 @@
                 <div class="flex gap-3 mt-4">
                     <div class="w-1/2">
                         <x-input-label for="password" :value="__('Password*')" />
-                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="old('password')" required autofocus/>
+                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="old('password')" autocomplete required autofocus/>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <div class="w-1/2">
                         <x-input-label for="password_confirmation" :value="__('Conferma Password*')" />
-                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
+                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" autocomplete required />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
                 </div>

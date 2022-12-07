@@ -46,13 +46,13 @@
         </x-dropdown>
     </div>
 
-    <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown1()" class="focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Aziende</p>
-            <i id="icon1" class="fa-solid fa-chevron-up"></i>
+    <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full ">
+        <button onclick="dropdown1()" class="{{request()->routeIs('business.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 uppercase">Aziende</p>
+            <i id="icon1" class="fa-solid fa-chevron-down {{request()->routeIs('business.*') ? 'rotate-180': ''}}"></i>
         </button>
 
-        <div id="menu1" class="hidden pb-3">
+        <div id="menu1" class="{{request()->routeIs('business.*') ? 'block': 'hidden'}} pb-3">
             <x-nav-link
                 class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
                 :href="route('business.index')" :active="request()->routeIs('business.index')"
@@ -71,22 +71,22 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown2()" class="focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Dispositivi <br> Servizi</p>
-            <i id="icon2" class="fa-solid fa-chevron-up"></i>
+        <button onclick="dropdown2()" class="{{request()->routeIs('service.*') ? 'text-indigo-400 font-bold text-lg': 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 uppercase">Dispositivi <br> Servizi</p>
+            <i id="icon2" class="fa-solid fa-chevron-down {{request()->routeIs('service.*') ? 'rotate-180': ''}}"></i>
         </button>
 
-        <div id="menu2" class="hidden pb-3">
+        <div id="menu2" class="{{request()->routeIs('service.*') ? 'block': 'hidden'}} pb-3">
             <x-nav-link
                 class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
-                :href="route('business.index')" :active="request()->routeIs('business.index')"
+                :href="route('service.index')" :active="request()->routeIs('service.index')"
             >
                 <i class="fa-solid fa-list"></i>
                 {{ __('Lista') }}
             </x-nav-link>
             <x-nav-link
                 class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
-                :href="route('business.create')" :active="request()->routeIs('business.create')"
+                :href="route('service.create')" :active="request()->routeIs('service.create')"
             >
                 <i class="fa-solid fa-plus"></i>
                 {{ __('Aggiungi') }}
@@ -95,12 +95,12 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown3()" class="focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Ordini</p>
-            <i id="icon3" class="fa-solid fa-chevron-up"></i>
+        <button onclick="dropdown3()" class="{{request()->routeIs('order.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 uppercase">Ordini</p>
+            <i id="icon3" class="fa-solid fa-chevron-down {{request()->routeIs('order.*') ? 'rotate-180': ''}}"></i>
         </button>
 
-        <div id="menu3" class="hidden pb-3">
+        <div id="menu3" class="{{request()->routeIs('order.*') ? 'block': 'hidden'}} pb-3 w-full">
             <x-nav-link
             class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
             :href="route('order.index')" :active="request()->routeIs('order.index')"
@@ -109,20 +109,20 @@
                 {{ __('Lista') }}
             </x-nav-link>
 
-            <button class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
+            {{-- <button class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
                 <i class="fa-regular fa-calendar"></i>
                 <p class="text-base leading-4 tracking-[1px]">Calendario</p>
-            </button>
+            </button> --}}
         </div>
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full">
-        <button onclick="dropdown4()" class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Magazzino</p>
-            <i id="icon4" class="fa-solid fa-chevron-up"></i>
+        <button onclick="dropdown4()" class="{{request()->routeIs('warehouse.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 uppercase">Magazzino</p>
+            <i id="icon4" class="fa-solid fa-chevron-down {{request()->routeIs('warehouse.*') ? 'rotate-180': ''}}"></i>
         </button>
 
-        <div id="menu4" class="hidden pb-3">
+        <div id="menu4" class="{{request()->routeIs('warehouse.*') ? 'block': 'hidden'}} pb-3">
             <x-nav-link
             class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
             :href="route('warehouse.create')" :active="request()->routeIs('warehouse.create')"

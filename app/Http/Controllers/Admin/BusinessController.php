@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Business;
+use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -41,9 +42,11 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Provider $provider)
     {
-        return view('admin.business.create');
+        $id = auth()->user()->id;
+        $providers = Provider::where('business_id', $id)->get();
+        return view('admin.business.create', compact('providers'));
     }
 
     /**
@@ -79,15 +82,23 @@ class BusinessController extends Controller
             'discount' => ['nullable', 'numeric'],
             'subdomain' => ['string'],
         ]);
-        if (array_key_exists('logo', $validateBusiness)) {
-            $file_path = Storage::disk('public')->put('business_logo', $validateBusiness['logo']);
-            $validateBusiness['logo'] = $file_path;
-        }
+
+        $validateProvider = $request->validate([
+            'providers' => ['nullable'],
+        ]);
+
 
         $subdomain = str_replace(' ', '_', $validateBusiness['business']);
         $validateBusiness['subdomain'] = $subdomain;
-        $business = Business::create($validateBusiness);
 
+        $business = Business::create($validateBusiness);
+        $business->providers()->attach($validateProvider['providers']);
+
+        if (array_key_exists('logo', $validateBusiness)) {
+            $file_path = Storage::disk('public')->put('business-'. $business->id . '/' . 'Logo', $validateBusiness['logo']);
+            $validateBusiness['logo'] = $file_path;
+            $business->update($validateBusiness);
+        }
 
         $user = User::create([
             'role' => $validateUser['role'],
@@ -113,10 +124,11 @@ class BusinessController extends Controller
     public function show(Business $business)
     {
         $owner = $business->user()->wherePivot('business_id', $business->id)->whereRole('business')->first();
+        $providers = $business->providers;
         $collaborators = $business->user()->wherePivot('business_id', $business->id)->whereRole('collaborator')->get();
         $business['start_contract'] = date('d-m-Y', strtotime($business['start_contract']));
         $business['end_contract'] = date('d-m-Y', strtotime($business['end_contract']));
-        return view('admin.business.show', compact('business', 'collaborators', 'owner'));
+        return view('admin.business.show', compact('business', 'collaborators', 'owner', 'providers'));
     }
 
     /**
@@ -127,9 +139,11 @@ class BusinessController extends Controller
      */
     public function edit(Business $business)
     {
+        $id = auth()->user()->id;
+        $providers = Provider::where('business_id', $id)->get();
         $user = $business->user()->whereRole('business')->first();
 
-        return view('admin.business.edit', compact('business', 'user'));
+        return view('admin.business.edit', compact('business', 'user', 'providers'));
     }
 
     /**
@@ -161,16 +175,22 @@ class BusinessController extends Controller
             'mobile_phone_business' => ['nullable', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
             'email_business' => ['required', 'string', 'email'],
             'pec_business' => ['nullable', 'string', 'email', 'unique:businesses,pec_business,'.$business->id],
-            'type_business' => ['required', 'string'],
+            'type_business' => ['nullable', 'string'],
             'start_contract' => ['required', 'string'],
             'end_contract' => ['required', 'string'],
             'discount' => ['nullable', 'numeric'],
             'subdomain' => ['string'],
         ]);
 
+        $validateProvider = $request->validate([
+            'providers' => ['nullable'],
+        ]);
+
         if ($request->hasFile('logo')) {
-            Storage::delete($business->logo);
-            $logo = Storage::disk('public')->put('business_logo', $request->logo);
+            if ($business->logo) {
+                Storage::delete($business->logo);
+            }
+            $logo = Storage::disk('public')->put('business-'. $business->id . '/' . 'Logo', $request->logo);
             $validateBusiness['logo'] = $logo;
         }
 
@@ -178,6 +198,11 @@ class BusinessController extends Controller
         $validateBusiness['subdomain'] = $subdomain;
 
         $business->update($validateBusiness);
+
+        if ($validateProvider) {
+            $business->providers()->sync($validateProvider['providers']);
+        }
+
         $user->update($validateUser);
 
         return redirect()->route('business.index')->with('message', "$business->business modificato!");

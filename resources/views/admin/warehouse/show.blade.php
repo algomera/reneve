@@ -3,9 +3,9 @@
 @section('content')
 <div class="py-12">
     <div class="w-[90%] mx-auto">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mb-5">
             <h1 class="text-3xl font-semibold mb-5">{{$product->name}}</h1>
-            <a href="{{route('warehouse.index')}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+            <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
         </div>
 
         <div class="w-full bg-white shadow-lg p-5 flex">

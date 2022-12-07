@@ -5,7 +5,7 @@
     <div class="w-[90%] mx-auto">
         <div class="flex justify-between items-center">
             <h1 class="text-3xl font-semibold mb-5">{{$business->business}}</h1>
-            <a href="{{route('business.index')}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+            <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
         </div>
         @if($errors->all())
             @foreach ($errors->all() as $error)
@@ -35,7 +35,7 @@
                     <div class="w-1/2 ">
                         <x-input-label for="logo" :value="__('Logo')" />
                         <x-text-input id="logo" class="block mt-2 w-full" type="file" name="logo" :value="old('logo', $business->logo)" />
-                        <x-input-error :messages="$errors->get('Logo')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('logo')" class="mt-2" />
                     </div>
                 </div>
                 <div class="flex gap-3 mt-4">
@@ -105,6 +105,17 @@
                         <x-text-input id="end_contract" class="block mt-1 w-full" type="date" name="end_contract" :value="old('end_contract', $business->end_contract)" required autofocus/>
                         <x-input-error :messages="$errors->get('end_contract')" class="mt-2" />
                     </div>
+                </div>
+
+                <h3 class="text-lg font-semibold mt-7 mb-5">Servizi associati</h3>
+
+                <div class="flex flex-col flex-wrap min-h-[350px] max-h-[350px] gap-5">
+                    @foreach ($providers as $pv )
+                        <div class="flex gap-3">
+                            <input type="checkbox" id="{{'provider-'.$pv->id}}" name="providers[]" value="{{$pv->id}}" @if ($business->providers->contains($pv)) checked @endif>
+                            <x-input-label :for="$pv->id" :value="$pv->name" class="font-bold capitalize" />
+                        </div>
+                    @endforeach
                 </div>
             </div>
 

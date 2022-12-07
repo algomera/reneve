@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $description
  * @property int|null $duration
  * @property float $price
- * @property int $avaiable
+ * @property int $available
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Business $business
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Provider newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Provider newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Provider query()
- * @method static \Illuminate\Database\Eloquent\Builder|Provider whereAvaiable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Provider whereavailable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Provider whereBusinessId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Provider whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Provider whereDescription($value)
@@ -39,8 +39,10 @@ class Provider extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function business() {
-        return $this->belongsTo(Business::class);
+        return $this->belongsToMany(Business::class);
     }
 
     public function cabin() {

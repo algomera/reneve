@@ -17,9 +17,10 @@ class VerifyIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->isAdmin()) {
+        if (!auth()->user()->isAdmin()) {
             return redirect('/');
+        } else {
+            return $next($request);
         }
-        return $next($request);
     }
 }

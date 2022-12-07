@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Models\Product
  *
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $qta
  * @property int $put_of_print
  * @property int|null $discount
- * @property int $avaiable
+ * @property int $available
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Business $business
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product query()
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereAvaiable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereavailable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereBusinessId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
@@ -50,7 +50,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
