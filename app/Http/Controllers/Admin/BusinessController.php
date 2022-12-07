@@ -188,7 +188,7 @@ class BusinessController extends Controller
 
         if ($request->hasFile('logo')) {
             if ($business->logo) {
-                Storage::delete($business->logo);
+                Storage::disk('public')->delete($business->logo);
             }
             $logo = Storage::disk('public')->put('business-'. $business->id . '/' . 'Logo', $request->logo);
             $validateBusiness['logo'] = $logo;
