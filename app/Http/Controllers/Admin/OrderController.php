@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use DataTables;
 
 class OrderController extends Controller
 {
@@ -15,14 +15,15 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Product $product)
     {
+
         if ($request->ajax()) {
-            $data = Order::select('*');
+            $data = Order::with('business')->select('*');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('amount', function($data) {
-                    $total = $data->products()->withTrashed()->sum('price');
+                    $total = $data->total;
                     $totalFormat = '€ ' . number_format($total, 2 , ',', '.');
                     return $totalFormat;
                 })->addColumn('action', function($data){
@@ -33,8 +34,6 @@ class OrderController extends Controller
                     return $btn;
                 })->editColumn('created_at', function($data){
                     return $data->created_at->format('Y-m-d / H:i');
-                })->editColumn('business_id', function($data){
-                    return $data->business->business;
                 })->rawColumns(['action', 'amount'])->make(true);
         }
 

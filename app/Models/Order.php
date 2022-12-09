@@ -32,6 +32,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    public function getTotalAttribute() {
+        $total= 0;
+        foreach ($this->products()->withTrashed()->get() as $pr) {
+            $price = $pr->price;
+            $qta = $pr->pivot->qta;
+            $total += $price * $qta;
+        }
+        return $total;
+    }
+
     public function business() {
         return $this->belongsTo(Business::class);
     }

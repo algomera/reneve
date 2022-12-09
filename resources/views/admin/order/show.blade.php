@@ -35,7 +35,7 @@
                         <th class="text-start p-2">Nome</th>
                         <th class="text-start p-2">Prezzo</th>
                         <th class="text-start p-2">quantità</th>
-                        <th class="text-start p-2">total</th>
+                        <th class="text-start p-2">totale</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,15 +45,15 @@
                             <td>{{$pr->ref}}</td>
                             <td>{{$pr->business->business}}</td>
                             <td>{{$pr->name}}</td>
-                            <td>{{$pr->price}} €</td>
+                            <td>€ {{$pr->price}}</td>
                             <td>{{$pr->pivot->qta}}</td>
-                            <td>{{$pr->total}}</td>
+                            <td>€ {{number_format($pr->total, 2 , ',', '.')}}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="w-full flex justify-end mt-2">
-                <p class="text-[21px]"><strong>Totale Ordine: </strong> € {{$order->products()->withTrashed()->sum('price')}}</p>
+                <p class="text-[21px]"><strong>Totale Ordine: </strong> € {{number_format($order->total, 2 , ',', '.')}}</p>
             </div>
         </div>
     </div>

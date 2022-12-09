@@ -41,11 +41,11 @@
                 ajax: "{{ route('order.index') }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'business_id', name: 'business_id'},
+                    {data: 'business.business', name: 'business.business'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'status', name: 'status'},
                     {data: 'payment', name: 'payment'},
-                    {data: 'amount', name: 'amount', orderable:true, searchable: true},
+                    {data: 'amount', name: 'amount', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

@@ -27,8 +27,7 @@
                         <th>Tipo</th>
                         <th>durata</th>
                         <th>prezzo</th>
-                        <th>Creata</th>
-                        <th>Eliminata</th>
+                        <th>Creato il</th>
                         <th class=" min-w-[120px]">&nbsp;</th>
                     </tr>
                 </thead>
@@ -39,9 +38,8 @@
                             <td>{{$pv->name}}</td>
                             <td class="capitalize">{{$pv->type}}</td>
                             <td>{{$pv->duration}} Min.</td>
-                            <td>€ {{$pv->price}}</td>
+                            <td>€ {{number_format($pv->price, 2 , ',', '.')}}</td>
                             <td>{{$pv->created_at->format('d-m-Y')}}</td>
-                            <td>{{$pv->deleted_at ? $pv->deleted_at->format('d-m-Y') : ''}}</td>
                             <td class="flex shrink gap-1">
                                 <a href="{{route('service.show', $pv->id)}}" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
                                     <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
