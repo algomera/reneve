@@ -17,7 +17,8 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_KEY": "base64:VOyisncx8Ppe388BCiNiABIkliPfDagLQU7jL9Bekd0=",
-        "APP_URL": "https://reneve-r2dlbk3aq-algomera.vercel.app/",
+        "APP_URL": "https://yourproductionurl.com",
+        "ASSET_URL": "https://yourproductionurl.com",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
