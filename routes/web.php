@@ -19,9 +19,5 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::middleware(['auth', 'verified'])->namespace('Business')->group(function () {
-    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
-    Route::get('/business/home', [PageController::class, 'show'])->name('business');
-});
 
 require __DIR__.'/auth.php';

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -15,7 +14,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Product $product)
+    public function index(Request $request)
     {
 
         if ($request->ajax()) {
@@ -28,7 +27,7 @@ class OrderController extends Controller
                     return $totalFormat;
                 })->addColumn('action', function($data){
                     $btn =
-                    '<a href="'.route('order.show', $data).'" title="view" id="show-'.$data.'" class="flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
+                    '<a href="'.route('admin.order.show', $data).'" title="view" id="show-'.$data.'" class="flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
                         <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
                     </a>';
                     return $btn;

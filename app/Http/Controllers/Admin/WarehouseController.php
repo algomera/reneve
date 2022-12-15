@@ -15,17 +15,17 @@ class WarehouseController extends Controller
         $id = $product->id;
 
         $buttonShow =
-            '<a href="'.route('warehouse.show', $id).'" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
+            '<a href="'.route('admin.warehouse.show', $id).'" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
                 <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
             </a>';
 
         $buttonEdit =
-            '<a href="'.route('warehouse.edit', $id).'" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
+            '<a href="'.route('admin.warehouse.edit', $id).'" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
                 <i class="fa-solid fa-pen-to-square text-yellow-500 group-hover:text-white"></i>
             </a>';
 
         $buttonDelete =
-            '<button type="button" href="'.route('warehouse.destroy', $id).'" title="delete" class="ajax grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group">
+            '<button type="button" href="'.route('admin.warehouse.destroy', $id).'" title="delete" class="ajax grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group">
                 <i class="fa-solid fa-trash text-red-500 group-hover:text-white"></i>
             </button>';
 
@@ -40,7 +40,7 @@ class WarehouseController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::select('*');
+            $data = Product::select('*')->where('business_id', auth()->user()->id);
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){

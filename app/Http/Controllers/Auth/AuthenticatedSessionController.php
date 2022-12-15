@@ -32,7 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // $subdomain = auth()->user()->business->first()->subdomain;
+        // $businessDomain = str_replace('://', '://'. $subdomain .'.', config('app.url'). '.com');
+        // dd($businessDomain);
+
+        return redirect()->route(auth()->user()->getRedirectRouteName());
     }
 
     /**

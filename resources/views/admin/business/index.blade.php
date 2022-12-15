@@ -1,10 +1,8 @@
-@extends('layouts.admin')
+<x-admin-layout>
+    @section('css')
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    @endsection
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-@endsection
-
-@section('content')
     <div class="py-12">
         <div class="w-[90%] mx-auto">
             <h1 class="text-3xl font-semibold mb-5">Lista Aziende</h1>
@@ -56,18 +54,18 @@
                                     <button data-modal-toggle="popup-modal-hard-delete{{$bs->id}}" title='hard delete' class='grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group'>
                                         <i class="fa-solid fa-xmark text-red-500/80 group-hover:text-white"></i>
                                     </button>
-                                    <x-modals.message modal='popup-modal-hard-delete{{$bs->id}}' :id='$bs->id' message='Elimina definitivamente' :name='$bs->business' route='business.destroy'/>
+                                    <x-modals.message modal='popup-modal-hard-delete{{$bs->id}}' :id='$bs->id' message='Elimina definitivamente' :name='$bs->business' route='admin.business.destroy'/>
                                 @else
-                                    <a href="{{route('business.show', $bs->id)}}" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
+                                    <a href="{{route('admin.business.show', $bs->id)}}" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
                                         <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
                                     </a>
-                                    <a href="{{route('business.edit', $bs->id)}}" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
+                                    <a href="{{route('admin.business.edit', $bs->id)}}" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
                                         <i class="fa-solid fa-pen-to-square text-yellow-500 group-hover:text-white"></i>
                                     </a>
                                     <button data-modal-toggle="popup-modal-soft-delete{{$bs->id}}" title='soft delete' class='grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group'>
                                         <i class="fa-solid fa-trash text-red-500 group-hover:text-white"></i>
                                     </button>
-                                    <x-modals.message modal='popup-modal-soft-delete{{$bs->id}}' :id='$bs->id' message='Elimina' :name='$bs->business' route='business.destroy'/>
+                                    <x-modals.message modal='popup-modal-soft-delete{{$bs->id}}' :id='$bs->id' message='Elimina' :name='$bs->business' route='admin.business.destroy'/>
                                 @endif
                             </td>
                         </tr>
@@ -81,20 +79,23 @@
             </div>
         </div>
     </div>
-@endsection
 
-@push('scripts')
-    <script type="module">
-        $(document).ready( function () {
-            $('#businessTable').DataTable({
-                "bPaginate":false,
-                "bInfo":false,
-                "oLanguage": {
-                    "sZeroRecords": "Nessun risultato trovato!",
-                    "sProcessing": "Caricamento Dati..."
-                },
-            });
-            $('.dataTables_filter').addClass('mb-[15px]');
-        } );
-    </script>
-@endpush
+    @push('scripts')
+        <script type="module">
+            $(document).ready( function () {
+                $('#businessTable').DataTable({
+                    order: [[0, 'desc']],
+                    "sScrollY": "450px",
+                    "bPaginate":false,
+                    "bInfo":false,
+                    "oLanguage": {
+                        "sZeroRecords": "Nessun risultato trovato!",
+                        "sProcessing": "Caricamento Dati..."
+                    },
+                });
+                $('.dataTables_filter').addClass('mb-[15px]');
+            } );
+        </script>
+    @endpush
+</x-admin-layout>
+

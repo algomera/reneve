@@ -1,12 +1,14 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <a href="/" class="flex items-center flex-shrink-0 px-4">
+                <p class="font-bold text-4xl uppercase">
+                    new<span class="font-extralight"> app</span> reneve
+                </p>
             </a>
         </x-slot>
 
-        <form method="POST" action="{{ route('password.update') }}">
+        <form action="{{Route('login')}}" method="POST" action="{{ route('password.update') }}">
             @csrf
 
             <!-- Password Reset Token -->

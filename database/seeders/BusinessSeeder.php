@@ -46,7 +46,7 @@ class BusinessSeeder extends Seeder
 
         for ($i=0; $i < 50 ; $i++) {
             $name = fake()->name;
-            Business::create([
+            $business = Business::create([
                 'business' => $name,
                 'logo' => fake()->imageUrl(350, 350, 'animal', true, 'dogs', true, 'png'),
                 'p_iva_business' =>  '12312312312',
@@ -61,9 +61,7 @@ class BusinessSeeder extends Seeder
                 'discount' => array_rand($discount),
                 'subdomain' => str_replace(' ', '_', $name)
             ]);
-        }
 
-        for ($m=0; $m < 50; $m++) {
             $UserBusiness = User::create([
                 'role' => 'business',
                 'name' => fake()->name(),
@@ -73,22 +71,37 @@ class BusinessSeeder extends Seeder
                 'email' => fake()->freeEmail(),
                 'password' => Hash::make('password')
             ]);
-            $assign = mt_rand(1,50);
-            $UserBusiness->business()->attach($assign);
+
+            $UserBusiness->business()->attach($business['id']);
             $UserBusiness->assignRole(Role::findByName('business'));
+
+            for ($k=0; $k < 4 ; $k++) {
+                $collaborator = User::create([
+                    'role' => 'collaborator',
+                    'name' => fake()->name(),
+                    'last_name' => fake()->lastName(),
+                    'email' => fake()->freeEmail(),
+                    'password' => Hash::make('password')
+                ]);
+
+                $collaborator->business()->attach($business['id']);
+                $collaborator->assignRole(Role::findByName('collaborator'));
+            }
+
+            for ($p=0; $p < 10 ; $p++) {
+                $collaborator = User::create([
+                    'role' => 'patient',
+                    'name' => fake()->name(),
+                    'last_name' => fake()->lastName(),
+                    'email' => fake()->freeEmail(),
+                    'password' => Hash::make('password')
+                ]);
+
+                $collaborator->business()->attach($business['id']);
+                $collaborator->assignRole(Role::findByName('patient'));
+            }
         }
 
-        for ($k=0; $k < 200 ; $k++) {
-            $collaborator = User::create([
-                'role' => 'collaborator',
-                'name' => fake()->name(),
-                'last_name' => fake()->lastName(),
-                'email' => fake()->freeEmail(),
-                'password' => Hash::make('password')
-            ]);
-            $assign = mt_rand(1,50);
-            $collaborator->business()->attach($assign);
-            $collaborator->assignRole(Role::findByName('collaborator'));
-        }
+
     }
 }

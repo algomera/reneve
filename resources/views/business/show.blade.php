@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout>
     <div class="py-12">
         <div class="w-[90%] mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -13,4 +13,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-business-layout>

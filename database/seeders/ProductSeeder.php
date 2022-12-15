@@ -34,26 +34,26 @@ class ProductSeeder extends Seeder
             '30' => 30
         ];
 
-        for ($i=0; $i < 100 ; $i++) {
-            $product = Product::create([
-                'business_id' => mt_rand(2, 50),
-                'name' => fake()->word(),
-                'description' => fake()->paragraph(),
-                'ref' => fake()->isbn13(),
-                'content' => fake()->word(),
-                'price' => fake()->randomFloat(2, 1, 999),
-                'type' => array_rand($type),
-                'treatment' => array_rand($treatment),
-                'product_line' => fake()->word() ,
-                'qta' => rand(100, 1000),
-                'put_of_print' => fake()->boolean(),
-                'discount' => array_rand($discount),
-                'price_visible' => fake()->boolean(),
-            ]);
+        for ($i=1; $i < 501 ; $i++) {
+            for ($p=0; $p < 5; $p++) {
+                $product = Product::create([
+                    'business_id' => mt_rand(1, 51),
+                    'name' => fake()->word(),
+                    'description' => fake()->paragraph(),
+                    'ref' => fake()->isbn13(),
+                    'content' => fake()->word(),
+                    'price' => fake()->randomFloat(2, 1, 99),
+                    'type' => array_rand($type),
+                    'treatment' => array_rand($treatment),
+                    'product_line' => fake()->word() ,
+                    'qta' => rand(1, 100),
+                    'put_of_print' => fake()->boolean(),
+                    'discount' => array_rand($discount),
+                    'price_visible' => fake()->boolean(),
+                ]);
 
-            $assign = mt_rand(1,50);
-            $product->order()->attach($assign);
-
+                $product->order()->attach($i);
+            }
         }
     }
 }

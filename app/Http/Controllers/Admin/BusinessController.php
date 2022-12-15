@@ -24,7 +24,7 @@ class BusinessController extends Controller
             $perPage = $request->get('perPage');
         }
 
-        $businesses = Business::select([
+        $businesses = Business::orderBy('id', 'DESC')->select([
             'id',
             'business',
             'type_business',
@@ -114,7 +114,7 @@ class BusinessController extends Controller
 
         $user->business()->attach($business);
 
-        return redirect()->route('business.index')->with('message', "Nuova azienda $business->name appartenente a $user->name inserita!");
+        return redirect()->route('admin.business.index')->with('message', "Nuova azienda $business->name appartenente a $user->name inserita!");
     }
 
     /**
@@ -196,7 +196,7 @@ class BusinessController extends Controller
             $validateBusiness['logo'] = $logo;
         }
 
-        $subdomain = str_replace(' ', '_', $validateBusiness['business']);
+        $subdomain = str_replace(' ', '', $validateBusiness['business']);
         $validateBusiness['subdomain'] = $subdomain;
 
         $business->update($validateBusiness);
@@ -207,7 +207,7 @@ class BusinessController extends Controller
 
         $user->update($validateUser);
 
-        return redirect()->route('business.index')->with('message', "$business->business modificato!");
+        return redirect()->route('admin.business.index')->with('message', "$business->business modificato!");
     }
 
     /**
@@ -226,7 +226,7 @@ class BusinessController extends Controller
         } else {
             $business->delete();
         }
-        return redirect()->route('business.index')->with('message', $request->hard ? "L'azienda è stata eliminata definitivamente!" : "L'azienda è stata eliminata!");
+        return redirect()->route('admin.business.index')->with('message', $request->hard ? "L'azienda è stata eliminata definitivamente!" : "L'azienda è stata eliminata!");
     }
 
     /**
@@ -238,6 +238,6 @@ class BusinessController extends Controller
     public function restore($id)
     {
         Business::withTrashed()->find($id)->restore();
-        return redirect()->route('business.index')->with('message', "azienda ripristinata!");
+        return redirect()->route('admin.business.index')->with('message', "azienda ripristinata!");
     }
 }

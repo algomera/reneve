@@ -64,7 +64,7 @@ return new class extends Migration
             $table->boolean('cicle')->default(false);
             $table->boolean('contraceptive')->default(false);
             $table->boolean('smoker')->default(false);
-            $table->char('pregnancy', 1)->nullable();
+            $table->smallInteger('pregnancy')->nullable();
             $table->string('cellulite')->nullable();
             $table->string('intestine')->nullable();
 

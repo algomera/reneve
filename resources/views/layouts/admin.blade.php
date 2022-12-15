@@ -37,7 +37,8 @@
             <div class="w-[90%] mx-auto">
                 @include('partials.message')
             </div>
-            @yield('content')
+
+            {{ $slot }}
         </main>
     </div>
 

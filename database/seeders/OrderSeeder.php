@@ -28,10 +28,10 @@ class OrderSeeder extends Seeder
             'annullato' => 'annullato',
         ];
 
-        for ($i=0; $i < 100; $i++) {
+        for ($i=2; $i < 52; $i++) {
             for ($m=0; $m < 10 ; $m++) {
                 Order::create([
-                    'business_id' => rand(1, 50),
+                    'business_id' => $i,
                     'notes' => fake()->paragraph(),
                     'status' => array_rand($state),
                     'payment' => array_rand($pay),

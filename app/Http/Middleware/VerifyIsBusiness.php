@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class VerifyIsAdmin
+class VerifyIsBusiness
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class VerifyIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->isAdmin()) {
+        if (!auth()->user()->isBusiness()) {
             return redirect('/');
         } else {
             return $next($request);

@@ -1,10 +1,8 @@
-@extends('layouts.admin')
+<x-admin-layout>
+    @section('css')
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    @endsection
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-@endsection
-
-@section('content')
     <div class="py-12">
         <div class="w-[90%] mx-auto">
             <div class="flex justify-between items-center mb-10">
@@ -57,19 +55,20 @@
             </div>
         </div>
     </div>
-@endsection
 
-@push('scripts')
-    <script type="module">
-        $(document).ready( function () {
-            $('#orderTable').DataTable({
-                "bPaginate":false,
-                "bInfo":false,
-                "oLanguage": {
-                    "sZeroRecords": "Nessun risultato trovato!",
-                },
-            });
-            $('.dataTables_filter').addClass('mb-[15px]')
-        } );
-    </script>
-@endpush
+    @push('scripts')
+        <script type="module">
+            $(document).ready( function () {
+                $('#orderTable').DataTable({
+                    "bPaginate":false,
+                    "bInfo":false,
+                    "oLanguage": {
+                        "sZeroRecords": "Nessun risultato trovato!",
+                    },
+                });
+                $('.dataTables_filter').addClass('mb-[15px]')
+            } );
+        </script>
+    @endpush
+</x-admin-layout>
+

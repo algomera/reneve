@@ -1,24 +1,21 @@
-<x-admin-layout>
+<x-business-layout>
     @section('css')
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     @endsection
 
     <div class="py-12">
         <div class="w-[90%] mx-auto">
-            <h1 class="text-3xl font-semibold mb-5">Lista Prodotti</h1>
+            <h1 class="text-3xl font-semibold mb-5">Lista Pazienti</h1>
 
-            <table id="productTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
+            <table id="patientTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
                 <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
                     <tr>
                         <th class="text-start p-2">Id</th>
-                        <th class="text-start p-2">ref</th>
-                        <th class="text-start p-2">Nome</th>
-                        <th class="text-start p-2">Tipo</th>
-                        <th class="text-start p-2">Trattamento</th>
-                        <th class="text-start p-2">Ln. Prodotto</th>
-                        <th class="text-start p-2">Quantità</th>
-                        <th class="text-start p-2">Sconto</th>
-                        <th class="text-start p-2">Pr. Visibile</th>
+                        <th class="text-start p-2">Paziente</th>
+                        <th class="text-start p-2">nato il</th>
+                        <th class="text-start p-2">professione</th>
+                        <th class="text-start p-2">email</th>
+                        <th class="text-start p-2">cellulare</th>
                         <th class="min-w-[120px]">&nbsp;</th>
                     </tr>
                 </thead>
@@ -32,24 +29,21 @@
     @push('scripts')
         <script type="module">
             $(function () {
-                var table = $('#productTable').DataTable({
+                var table = $('#patientTable').DataTable({
                     "oLanguage": {
-                        "sZeroRecords": "Nessun risultato trovato!",
+                        "sZeroRecords": "Nessun Paziente trovato!",
                     },
                     order: [[0, 'desc']],
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ route('admin.warehouse.index') }}",
+                    ajax: "{{ route('business.patient.index') }}",
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'ref', name: 'ref'},
                         {data: 'name', name: 'name'},
-                        {data: 'type', name: 'type'},
-                        {data: 'treatment', name: 'treatment'},
-                        {data: 'product_line', name: 'product_line'},
-                        {data: 'qta', name: 'qta'},
-                        {data: 'discount', name: 'discount'},
-                        {data: 'price_visible', name: 'price_visible'},
+                        {data: 'date_of_birth', name: 'date_of_birth'},
+                        {data: 'profession', name: 'profession'},
+                        {data: 'email', name: 'email'},
+                        {data: 'mobile_phone', name: 'mobile_phone'},
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 });
@@ -61,9 +55,9 @@
                     }
                 });
 
-                $('#productTable').on('click', '.ajax', function (ele) {
+                $('#patientTable').on('click', '.ajax', function (ele) {
                     ele.preventDefault();
-                    const msg = 'Eliminare questo prodotto?';
+                    const msg = 'Eliminare questo paziente?';
                     if(!confirm(msg)){
                         return false;
                     }
@@ -79,7 +73,6 @@
                     })
                 });
             });
-        </script>
+          </script>
     @endpush
-</x-admin-layout>
-
+</x-business-layout>

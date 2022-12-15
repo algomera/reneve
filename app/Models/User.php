@@ -228,4 +228,21 @@ class User extends Authenticatable
     public function isAdmin() {
         return 'admin' === $this->role;
     }
+
+    public function isBusiness() {
+        if ('business' === $this->role) {
+            return true;
+        } else if ('collaborator' === $this->role) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getRedirectRouteName() {
+        return match ($this->role) {
+            'admin' => 'admin.dashboard',
+            'business' => 'business.dashboard',
+            'collaborator' => 'business.dashboard',
+        };
+    }
 }

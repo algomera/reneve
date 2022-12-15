@@ -1,13 +1,15 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <a href="/" class="flex items-center flex-shrink-0 px-4">
+                <p class="font-bold text-4xl uppercase">
+                    new<span class="font-extralight"> app</span> reneve
+                </p>
             </a>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Hai dimenticato la password? Nessun problema. Comunicaci il tuo indirizzo e-mail e ti invieremo un link per reimpostare la password che ti consentirà di sceglierne una nuova.') }}
         </div>
 
         <!-- Session Status -->

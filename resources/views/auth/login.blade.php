@@ -3,7 +3,7 @@
         <x-slot name="logo">
             <a href="/" class="flex items-center flex-shrink-0 px-4">
                 <p class="font-bold text-4xl uppercase">
-                    new<span class="font-normal">app</span>
+                    new<span class="font-extralight"> app</span> reneve
                 </p>
             </a>
         </x-slot>
