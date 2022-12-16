@@ -96,7 +96,7 @@
                     <div class="flex flex-col flex-wrap min-h-[350px] max-h-[350px] gap-5">
                         @foreach ($providers as $pv )
                             <div class="flex gap-3">
-                                <x-text-input type="checkbox" id="{{'provider-'.$pv->id}}" name="providers[]" :value="old($pv->id) autofocus">
+                                <input type="checkbox" id="{{'provider-'.$pv->id}}" name="providers[]" :value="old($pv->id)" autofocus">
                                 <x-input-label :for="'provider-'.$pv->id" :value="$pv->name" class="font-bold capitalize" />
                             </div>
                         @endforeach

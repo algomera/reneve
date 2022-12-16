@@ -70,6 +70,7 @@ return new class extends Migration
 
             // Come ci conosce?
             $table->string('knows')->nullable();
+            $table->text('note')->nullable();
 
             // Alimentazione
             $table->boolean('alimentation')->default(true);
@@ -83,15 +84,15 @@ return new class extends Migration
             $table->boolean('aesthetics')->default(true);
 
             // Info Varie
-            $table->boolean('adipe')->default(false);
-            $table->boolean('skin_relax')->default(false);
-            $table->boolean('teleangectasia')->default(false);
+            $table->boolean('adipe')->nullable();
+            $table->boolean('skin_relax')->nullable();
+            $table->boolean('teleangectasia')->nullable();
             $table->string('body_cream')->nullable();
             $table->string('face_cream')->nullable();
 
             // Pelle
             $table->string('skin')->nullable();
-            $table->string('skin_type')->nullable();
+            $table->json('skin_type')->nullable();
             $table->string('skin_blemishes')->nullable();
             $table->string('body_blemishes')->nullable();
             $table->boolean('solar_lamp')->default(false);

@@ -79,7 +79,6 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $validated = $request->validate([
             'role' => ['required'],
             'name' => ['required', 'string'],
@@ -137,11 +136,20 @@ class PatientController extends Controller
             'body_cream' => ['nullable', 'string'],
             'face_cream' => ['nullable', 'string'],
             'skin' => ['nullable', 'string'],
+            'skin_type' => ['nullable'],
             'skin_blemishes' => ['nullable', 'string'],
             'body_blemishes' => ['nullable', 'string'],
             'solar_lamp' => ['nullable', 'boolean'],
         ]);
         $validated['role'] = 'patient';
+        $validated['foreigner'] = $request->boolean('foreigner');
+        $validated['adipe'] = $request->boolean('adipe');
+        $validated['skin_relax'] = $request->boolean('skin_relax');
+        $validated['teleangectasia'] = $request->boolean('teleangectasia');
+        $validated['skin_type'] = $request->skin_type;
+        if ($validated['skin_type']) {
+            $validated['skin_type'] = json_encode($validated['skin_type']);
+        }
 
         $comb = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array();
@@ -151,7 +159,7 @@ class PatientController extends Controller
             $pass[] = $comb[$n];
         }
         $validated['password'] = implode($pass);
-dd($validated);
+
         $patient = User::create($validated);
 
         $business = auth()->user()->business->first();
@@ -161,7 +169,6 @@ dd($validated);
             $patient->update($validated);
         }
 
-        $business = auth()->user()->business->first();
         $patient->business()->attach($business);
 
         return redirect()->route('business.patient.index')->with('message', "Paziente $patient->name $patient->last_name registrato!");
@@ -188,9 +195,14 @@ dd($validated);
      */
     public function edit($id)
     {
-        $patient = User::find($id);
+        $user = User::find($id);
+        $skin_type = ['grassa', 'secca', 'alipidica', 'mista', 'sensibile', 'acneica', 'couperose', 'rugosa', 'discromia', 'asfittica'];
+        $type = [];
+        if ($user->skin_type) {
+            $type = json_decode($user->skin_type);
+        }
 
-        return view('business.patient.edit', compact('patient'));
+        return view('business.patient.edit', compact('user', 'skin_type', 'type'));
     }
 
     /**
@@ -200,9 +212,92 @@ dd($validated);
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        // dd($request->foreigner);
+        $user = User::find($id);
+        $validated = $request->validate([
+            'name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'foreigner' => ['nullable', 'boolean'],
+            'image_profile' => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg'],
+            'cf' => ['nullable', 'regex:/^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$/'],
+            'date_of_birth' => ['nullable', 'string'],
+            'birth_place' => ['nullable', 'string'],
+            'country_of_birth' => ['nullable', 'string'],
+            'sex' => ['nullable', 'boolean'],
+            'height' => ['nullable', 'numeric'],
+            'profession' => ['nullable', 'string'],
+            'business_name' => ['nullable', 'string'],
+            'p_iva' => ['nullable', 'numeric', 'regex:/^[0-9]{11}$/'],
+            'mobile_phone' => ['required', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'telephone' => ['nullable', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'email' => ['required', 'string', 'email', 'unique:users,email,'.$user->id],
+            'address' => ['nullable', 'string'],
+            'civic' => ['nullable', 'numeric'],
+            'city' => ['nullable', 'string'],
+            'province' => ['nullable', 'string'],
+            'cap' => ['nullable', 'numeric'],
+            'allergies' => ['nullable', 'string'],
+            'interventions' => ['nullable', 'string'],
+            'patologys' => ['nullable', 'string'],
+            'medications' => ['nullable', 'string'],
+            'disturbance' => ['nullable', 'string'],
+            'artrosi' => ['nullable', 'boolean'],
+            'placche' => ['nullable', 'string'],
+            'diseases' => ['nullable', 'string'],
+            'covid_vaccine' => ['nullable', 'boolean'],
+            'sport' => ['nullable', 'boolean'],
+            'diuresi' => ['nullable', 'string'],
+            'diuresi_qta' => ['nullable', 'numeric'],
+            'menopause' => ['nullable', 'boolean'],
+            'cicle' => ['nullable', 'boolean'],
+            'contraceptive' => ['nullable', 'boolean'],
+            'smoker' => ['nullable', 'boolean'],
+            'pregnancy' => ['nullable', 'numeric'],
+            'cellulite' => ['nullable', 'string'],
+            'intestine' => ['nullable', 'string'],
+            'knows' => ['nullable', 'string'],
+            'alimentation' => ['nullable', 'boolean'],
+            'alimentation_note' => ['nullable', 'string'],
+            'alimentation_follow' => ['nullable', 'boolean'],
+            'alimentation_since' => ['nullable', 'string'],
+            'drenant' => ['nullable', 'string'],
+            'integration' => ['nullable', 'string'],
+            'aesthetics' => ['nullable', 'boolean'],
+            'adipe' => ['nullable', 'boolean'],
+            'skin_relax' => ['nullable', 'boolean'],
+            'teleangectasia' => ['nullable', 'boolean'],
+            'body_cream' => ['nullable', 'string'],
+            'face_cream' => ['nullable', 'string'],
+            'skin' => ['nullable', 'string'],
+            'skin_type' => ['nullable'],
+            'skin_blemishes' => ['nullable', 'string'],
+            'body_blemishes' => ['nullable', 'string'],
+            'solar_lamp' => ['nullable', 'boolean'],
+        ]);
+
+        $validated['foreigner'] = $request->boolean('foreigner');
+        $validated['adipe'] = $request->boolean('adipe');
+        $validated['skin_relax'] = $request->boolean('skin_relax');
+        $validated['teleangectasia'] = $request->boolean('teleangectasia');
+        $validated['skin_type'] = $request->skin_type;
+        if ($validated['skin_type']) {
+            $validated['skin_type'] = json_encode($validated['skin_type']);
+        }
+
+        $business = auth()->user()->business->first();
+        if ($request->hasFile('image_profile')) {
+            if ($user->image_profile) {
+                Storage::disk('public')->delete($user->image_profile);
+            }
+            $file_path = Storage::disk('public')->put('business-'. $business->id . '/' . 'Patients' . '/' . 'patient-' . $user->id . '/' . 'image_profile', $validated['image_profile']);
+            $validated['image_profile'] = $file_path;
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('business.patient.index')->with('message', "Paziente $user->name $user->last_name aggiornato!");
     }
 
     /**

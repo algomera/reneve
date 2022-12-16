@@ -113,7 +113,7 @@
                         <div class="flex gap-3 mt-4">
                             <div class="grow">
                                 <x-input-label for="mobile_phone" :value="__('Cellulare*')" />
-                                <x-text-input id="mobile_phone" class="block mt-1 w-full border-black/50 shadow-sm bg-slate-100" type="text" name="mobile_phone" :value="old('mobile_phone')" autofocus />
+                                <x-text-input id="mobile_phone" class="block mt-1 w-full border-black/50 shadow-sm bg-slate-100" type="text" name="mobile_phone" :value="old('mobile_phone')" required autofocus />
                                 <x-input-error :messages="$errors->get('mobile_phone')" class="mt-2" />
                             </div>
 
@@ -127,7 +127,7 @@
                         <div class="flex gap-3 mt-4">
                             <div class="grow">
                                 <x-input-label for="email" :value="__('Email')" />
-                                <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" autofocus />
+                                <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required autofocus />
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
                         </div>
@@ -216,7 +216,7 @@
 
                         <div class="mt-4">
                             <x-input-label for="disturbance" :value="__('Disturbi generali minori')" />
-                            <x-text-input id="disturbance" class="block mt-1 w-full" type="text" name="disturbance" :value="old('disturbance')" required autofocus />
+                            <x-text-input id="disturbance" class="block mt-1 w-full" type="text" name="disturbance" :value="old('disturbance')" autofocus />
                             <x-input-error :messages="$errors->get('disturbance')" class="mt-2" />
                         </div>
 
@@ -525,7 +525,7 @@
                             <div class="flex gap-5 flex-wrap">
                                 @foreach ($skin_type as $skin )
                                     <div class="flex gap-2 items-center justify-center">
-                                        <x-text-input id="{{$skin}}" type="checkbox" name="skin_type[]" :value="old($skin)" autofocus />
+                                        <x-text-input id="{{$skin}}" type="checkbox" name="skin_type[]" value="{{$skin}}" autofocus />
                                         <x-input-label for="{{$skin}}" value="{{$skin}}" class="font-bold capitalize" />
                                     </div>
                                 @endforeach
