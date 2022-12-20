@@ -126,15 +126,21 @@
                             </div>
                         </div>
                         <div class="flex gap-3 mt-4">
-                            <div class="w-1/2">
+                            <div class="w-1/2 relative">
                                 <x-input-label for="password" :value="__('Password*')" />
                                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="old('password')" autocomplete required autofocus/>
                                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                <div onclick="password()" class="absolute right-3 top-9 z-10">
+                                    <img id="imgPass" src="{{ asset('images/eye-slash.svg')}}" alt="">
+                                </div>
                             </div>
-                            <div class="w-1/2">
+                            <div class="w-1/2 relative">
                                 <x-input-label for="password_confirmation" :value="__('Conferma Password*')" />
                                 <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" autocomplete required />
                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                <div onclick="ConfPassword()" class="absolute right-3 top-9 z-10">
+                                    <img id="imgConfPass" src="{{ asset('images/eye-slash.svg')}}" alt="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -172,5 +178,27 @@
             document.querySelector("#nameFile").innerHTML = file;
         }
         console.log(file);
+    }
+    function password() {
+        var pass = document.getElementById("password");
+        var img = document.getElementById("imgPass");
+        if (pass.type == "password") {
+            pass.type = "text";
+            img.src = '{{ asset('images/eye.svg') }}';
+        } else {
+            pass.type = "password";
+            img.src = '{{ asset('images/eye-slash.svg') }}';
+        }
+    }
+    function ConfPassword() {
+        var passConf = document.getElementById("password_confirmation");
+        var imgConf = document.getElementById("imgConfPass");
+        if (passConf.type == "password") {
+            passConf.type = "text";
+            imgConf.src = '{{ asset('images/eye.svg') }}';
+        } else {
+            passConf.type = "password";
+            imgConf.src = '{{ asset('images/eye-slash.svg') }}';
+        }
     }
 </script>
