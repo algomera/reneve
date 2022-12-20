@@ -81,14 +81,20 @@
         </button>
 
         <div id="menu2" class="hidden pb-3">
-            <button class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
+            <x-nav-link
+            class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+            :href="route('business.reservation.create')" :active="request()->routeIs('business.reservation.create')"
+            >
                 <i class="fa-solid fa-plus"></i>
-                <p class="text-base leading-4 tracking-[1px]">Aggiungi</p>
-            </button>
-            <button class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
+                {{ __('Aggiungi') }}
+            </x-nav-link>
+            <x-nav-link
+            class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+            :href="route('business.calendar')" :active="request()->routeIs('business.calendar')"
+            >
                 <i class="fa-regular fa-calendar"></i>
-                <p class="text-base leading-4 tracking-[1px]">Calendario</p>
-            </button>
+                {{ __('Calendario') }}
+            </x-nav-link>
         </div>
     </div>
 

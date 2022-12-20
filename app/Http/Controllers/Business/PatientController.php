@@ -53,7 +53,9 @@ class PatientController extends Controller
                 })->editColumn('name', function($data){
                     return $data->name . ' ' . $data->last_name;
                 })->editColumn('date_of_birth', function($data){
-                    return date("d-m-Y", strtotime($data->date_of_birth));
+                    if ($data->date_of_birth) {
+                        return date("d-m-Y", strtotime($data->date_of_birth));
+                    }
                 })->rawColumns(['action'])->make(true);
         }
 
@@ -123,6 +125,7 @@ class PatientController extends Controller
             'cellulite' => ['nullable', 'string'],
             'intestine' => ['nullable', 'string'],
             'knows' => ['nullable', 'string'],
+            'note' => ['nullable', 'string'],
             'alimentation' => ['nullable', 'boolean'],
             'alimentation_note' => ['nullable', 'string'],
             'alimentation_follow' => ['nullable', 'boolean'],
@@ -182,9 +185,11 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patient = User::find($id);
+        $user = User::find($id);
 
-        return view('business.patient.show', compact('patient'));
+        $types = json_decode($user->skin_type);
+
+        return view('business.patient.show', compact('user', 'types'));
     }
 
     /**
@@ -214,7 +219,6 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->foreigner);
         $user = User::find($id);
         $validated = $request->validate([
             'name' => ['required', 'string'],
@@ -258,6 +262,7 @@ class PatientController extends Controller
             'cellulite' => ['nullable', 'string'],
             'intestine' => ['nullable', 'string'],
             'knows' => ['nullable', 'string'],
+            'note' => ['nullable', 'string'],
             'alimentation' => ['nullable', 'boolean'],
             'alimentation_note' => ['nullable', 'string'],
             'alimentation_follow' => ['nullable', 'boolean'],

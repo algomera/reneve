@@ -59,7 +59,7 @@ class BusinessSeeder extends Seeder
                 'start_contract' => fake()->date(),
                 'end_contract' => fake()->date(),
                 'discount' => array_rand($discount),
-                'subdomain' => str_replace(' ', '_', $name)
+                'subdomain' => str_replace(' ', '', $name)
             ]);
 
             $UserBusiness = User::create([

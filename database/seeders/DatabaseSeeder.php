@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             ProductSeeder::class,
             ProviderSeeder::class,
+            CabinSeeder::class,
+            // ReservationSeeder::class,
         ]);
     }
 }

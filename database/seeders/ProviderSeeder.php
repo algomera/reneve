@@ -30,16 +30,16 @@ class ProviderSeeder extends Seeder
         ];
 
         for ($i=0; $i < 50 ; $i++) {
+            $id = mt_rand(1, 10);
             $provider = Provider::create([
-                'business_id' => mt_rand(1, 10),
+                'business_id' => $id,
                 'type' => array_rand($type),
                 'name' => fake()->word(),
                 'description' => fake()->paragraph(),
                 'duration' => array_rand($time),
                 'price' => fake()->randomFloat(2, 1, 999),
             ]);
-            $assign = mt_rand(1,50);
-            $provider->business()->attach($assign);
+            $provider->business()->attach($id);
         }
     }
 }

@@ -16,7 +16,7 @@
                         <div class="flex justify-between">
                             <h3 class="text-xl font-semibold mb-5 uppercase tracking-[0.75px]">Dati anagrafici</h3>
                             @if ($user->image_profile)
-                                <img class="w-[100px] h-[100px] " src="{{asset('storage/' . $user->image_profile)}}" alt="">
+                                <img class="w-[100px]" src="{{asset('storage/' . $user->image_profile)}}" alt="">
                             @endif
 
                             <div>

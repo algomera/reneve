@@ -19,7 +19,9 @@ return new class extends Migration
             $table->foreignId('business_id')->constrained('businesses');
             $table->foreignId('cabin_id')->constrained('cabins');
             $table->foreignId('provider_id')->constrained('providers');
-            $table->string('date_time');
+            $table->dateTime('start_time');
+            $table->dateTime('finish_time');
+            $table->longText('note')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('cabins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('business_id')->constrained('businesses');
-            $table->foreignId('provider_id')->constrained('providers');
             $table->string('name');
             $table->timestamps();
         });

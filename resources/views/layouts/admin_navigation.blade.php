@@ -1,25 +1,23 @@
 <nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-900/90 flex-col">
 
     <div class="flex justify-center p-6 items-center space-x-3 w-full">
-        <p class="text-4xl leading-6 text-white uppercase">
-            Reneve
-        </p>
+        <img src="{{ asset('images/logo_reneve.svg') }}" alt="">
     </div>
 
-    <div class="mt-6 flex flex-col justify-start items-center gap-5 px-4 w-full border-gray-600 border-b pb-5 ">
+    <div class="mt-5 flex flex-col justify-start items-center gap-5 px-4 w-full border-gray-400 border-b-[2px] pb-5 ">
         <x-nav-link
-            class="flex jusitfy-center items-center gap-4 space-x-5 p-3 w-full text-white rounded "
+            class="flex jusitfy-center items-center gap-4 space-x-5 p-3 w-full text-white rounded capitalize text-[18px] font-semibold"
             :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')"
         >
-            <i class="fa-solid fa-house"></i>
+            <img class="w-5 h-5" src="{{ asset('images/icona_dashboard.svg') }}" alt="">
             {{ __('Dashboard') }}
         </x-nav-link>
 
         <x-dropdown>
             <x-slot name="trigger">
                 <button class="flex jusitfy-start items-center space-x-5 text-white font-medium ">
-                    <i class="fa-solid fa-user"></i>
-                    <div>{{auth()->user()->name }}</div>
+                    <img class="w-5 h-5" src="{{ asset('images/icona_admin.svg') }}" alt="">
+                    <div class="capitalize text-[18px] font-semibold">{{auth()->user()->name }}</div>
                 </button>
             </x-slot>
 
@@ -47,8 +45,8 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full ">
-        <button onclick="dropdown1()" class="{{request()->routeIs('admin.business.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="leading-5 uppercase">Aziende</p>
+        <button onclick="dropdown1()" class="{{request()->routeIs('admin.business.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 capitalize text-[18px] font-semibold">Aziende</p>
             <i id="icon1" class="fa-solid fa-chevron-down {{request()->routeIs('admin.business.*') ? 'rotate-180': ''}}"></i>
         </button>
 
@@ -61,7 +59,7 @@
                 {{ __('Lista') }}
             </x-nav-link>
             <x-nav-link
-                class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+                class="uppercase text-[12px] font-bold flex jusitfy-center items-center gap-3 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 ml-4 !pb-0 !pt-1 mt-1"
                 :href="route('admin.business.create')" :active="request()->routeIs('admin.business.create')"
             >
                 <i class="fa-solid fa-plus"></i>
@@ -71,8 +69,8 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown2()" class="{{request()->routeIs('admin.service.*') ? 'text-indigo-400 font-bold text-lg': 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="leading-5 uppercase">Dispositivi <br> Servizi</p>
+        <button onclick="dropdown2()" class="{{request()->routeIs('admin.service.*') ? 'text-[#6EA0FF] font-bold text-lg': 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 capitalize text-[18px] font-semibold">Dispositivi <br> Servizi</p>
             <i id="icon2" class="fa-solid fa-chevron-down {{request()->routeIs('admin.service.*') ? 'rotate-180': ''}}"></i>
         </button>
 
@@ -85,7 +83,7 @@
                 {{ __('Lista') }}
             </x-nav-link>
             <x-nav-link
-                class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+                class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 text-[12px] uppercase font-bold ml-4 !pb-0 !pt-1 mt-1"
                 :href="route('admin.service.create')" :active="request()->routeIs('admin.service.create')"
             >
                 <i class="fa-solid fa-plus"></i>
@@ -95,8 +93,8 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown3()" class="{{request()->routeIs('admin.order.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="leading-5 uppercase">Ordini</p>
+        <button onclick="dropdown3()" class="{{request()->routeIs('admin.order.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 capitalize text-[18px] font-semibold">Ordini</p>
             <i id="icon3" class="fa-solid fa-chevron-down {{request()->routeIs('admin.order.*') ? 'rotate-180': ''}}"></i>
         </button>
 
@@ -117,25 +115,25 @@
     </div>
 
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full">
-        <button onclick="dropdown4()" class="{{request()->routeIs('admin.warehouse.*') ? 'text-indigo-400 font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="leading-5 uppercase">Magazzino</p>
+        <button onclick="dropdown4()" class="{{request()->routeIs('admin.warehouse.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF]  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="leading-5 capitalize text-[18px] font-semibold">Magazzino</p>
             <i id="icon4" class="fa-solid fa-chevron-down {{request()->routeIs('admin.warehouse.*') ? 'rotate-180': ''}}"></i>
         </button>
 
         <div id="menu4" class="{{request()->routeIs('admin.warehouse.*') ? 'block': 'hidden'}} pb-3">
             <x-nav-link
             class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
-            :href="route('admin.warehouse.create')" :active="request()->routeIs('admin.warehouse.create')"
-            >
-                <i class="fa-solid fa-plus"></i>
-                {{ __('Aggiungi') }}
-            </x-nav-link>
-            <x-nav-link
-            class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
             :href="route('admin.warehouse.index')" :active="request()->routeIs('admin.warehouse.index')"
             >
                 <i class="fa-solid fa-list"></i>
                 {{ __('Prodotti') }}
+            </x-nav-link>
+            <x-nav-link
+            class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 uppercase text-[12px] font-bold ml-4 !pb-0 !pt-1 mt-1"
+            :href="route('admin.warehouse.create')" :active="request()->routeIs('admin.warehouse.create')"
+            >
+                <i class="fa-solid fa-plus"></i>
+                {{ __('Aggiungi') }}
             </x-nav-link>
         </div>
     </div>
