@@ -25,8 +25,6 @@ class OrderController extends Controller
                     $total = $data->total;
                     $totalFormat = '€ ' . number_format($total, 2 , ',', '.');
                     return $totalFormat;
-                })->addColumn('business', function($data) {
-                    return $data->business->business;
                 })->addColumn('action', function($data){
                     $btn =
                     '<a href="'.route('admin.order.show', $data).'" title="view" id="show-'.$data.'" class="grow flex justify-center px-2 h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#1EC981] group">
