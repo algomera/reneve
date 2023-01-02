@@ -39,7 +39,7 @@
                     ajax: "{{ route('admin.order.index') }}",
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'business.business', name: 'business.business'},
+                        {data: 'business', name: 'business'},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'status', name: 'status'},
                         {data: 'payment', name: 'payment'},
