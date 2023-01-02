@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9.051" height="17.664" viewBox="0 0 9.051 17.664">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rettangolo_639" data-name="Rettangolo 639" width="9.051" height="17.664" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Raggruppa_2571" data-name="Raggruppa 2571" transform="translate(0 -1)">
+    <g id="Raggruppa_2570" data-name="Raggruppa 2570" transform="translate(0 1)" clip-path="url(#clip-path)">
+      <path id="Tracciato_3637" data-name="Tracciato 3637" d="M4.526,8.585a1.906,1.906,0,0,1-1.308-.519,1.9,1.9,0,0,1-1.267.519L3.713,12.7H5.338L7.1,8.584a1.906,1.906,0,0,1-1.27-.519,1.9,1.9,0,0,1-1.305.519M9.051.982V7.1L4.526,17.664,0,7.1V.982a10.922,10.922,0,0,1,9.051,0M6.438,6.672a.7.7,0,0,0,.205.5h0a.7.7,0,0,0,1.195-.494V1.794a9.655,9.655,0,0,0-1.4-.393Zm-3.825,0V1.4a9.655,9.655,0,0,0-1.4.393V6.672a.7.7,0,0,0,.205.5h0a.7.7,0,0,0,1.195-.494m1.912-5.46q-.351,0-.7.025V6.672a.7.7,0,0,0,.205.5h0a.7.7,0,0,0,1.195-.494V1.237q-.35-.025-.7-.025" fill="#fff" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

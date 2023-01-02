@@ -25,10 +25,12 @@ class OrderController extends Controller
                     $total = $data->total;
                     $totalFormat = '€ ' . number_format($total, 2 , ',', '.');
                     return $totalFormat;
+                })->addColumn('business', function($data) {
+                    return $data->business->business;
                 })->addColumn('action', function($data){
                     $btn =
-                    '<a href="'.route('admin.order.show', $data).'" title="view" id="show-'.$data.'" class="flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
-                        <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
+                    '<a href="'.route('admin.order.show', $data).'" title="view" id="show-'.$data.'" class="grow flex justify-center px-2 h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#1EC981] group">
+                        <img src="'. asset('images/eyeglasses.svg') .'" alt="" class="scale-[1.2]">
                     </a>';
                     return $btn;
                 })->editColumn('created_at', function($data){

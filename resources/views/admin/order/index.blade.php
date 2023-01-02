@@ -7,8 +7,8 @@
         <div class="w-[90%] mx-auto">
             <h1 class="text-3xl font-semibold mb-5">Lista Ordini</h1>
 
-            <table id="orderTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
-                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
+            <table id="orderTable" class="w-full bg-slate-500 table-auto text-white cell display">
+                <thead class="!border-b-[2px] !border-white uppercase bg-[#272E3B]">
                     <tr>
                         <th class="text-start p-2">Id</th>
                         <th class="text-start p-2">Azienda</th>
@@ -16,7 +16,7 @@
                         <th class="text-start p-2">Stato Ordine</th>
                         <th class="text-start p-2">Pagamento</th>
                         <th class="text-start p-2">Importo</th>
-                        <th class="">&nbsp;</th>
+                        <th class="max-w-[120px]">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                     ajax: "{{ route('admin.order.index') }}",
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'business.business', name: 'business.business'},
+                        {data: 'business', name: 'business'},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'status', name: 'status'},
                         {data: 'payment', name: 'payment'},

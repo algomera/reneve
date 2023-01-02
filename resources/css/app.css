@@ -2,3 +2,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.dataTables_filter {
+    @apply !w-[426px]
+}
+.dataTables_filter label {
+    @apply text-opacity-0
+}
+@layer components {
+    .dataTables_filter input {
+        @apply !w-[80%] bg-no-repeat !px-8 bg-[center_left_10px] bg-[url('../../public/images/search.svg')] focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+    }
+    .dataTables_paginate > a {
+        @apply  !content-[' ']
+    }
+    .dataTables_paginate .previous {
+        @apply  text-[14px] font-bold
+    }
+    .dataTables_paginate .next {
+        @apply  text-[14px] font-bold
+    }
+
+}
+.cell tbody tr {
+    @apply odd:bg-[#343F52] even:bg-[#3F4A5F]
+}
+.cell thead {
+    @apply bg-[#272E3B]
+}
+.cell td {
+    @apply border-y border-r border-opacity-20 border-white
+}
+.cell th {
+    @apply border-y border-r border-opacity-20 border-white
+}
+
+.dataTables_paginate > a {
+    @apply !border-[#DCE2E2]
+}
+
+.dataTables_paginate span a {
+    @apply !border-[#DCE2E2] text-[15px] font-semibold
+}
+
+.dataTables_paginate span .current {
+    @apply  !text-white
+}
+
+.dataTables_info {
+    @apply text-[14px] font-semibold !text-[#98A0A0]
+}
+
+#orderTable {
+    @apply border-b border-[#E5EAEA] pb-3 mb-2 bg-transparent
+}
+

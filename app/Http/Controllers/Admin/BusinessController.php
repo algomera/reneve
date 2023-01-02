@@ -205,6 +205,10 @@ class BusinessController extends Controller
             $business->providers()->sync($validateProvider['providers']);
         }
 
+        if(count($validateProvider) < 1) {
+            $business->providers()->detach();
+        }
+
         $user->update($validateUser);
 
         return redirect()->route('admin.business.index')->with('message', "$business->business modificato!");

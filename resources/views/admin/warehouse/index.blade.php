@@ -7,7 +7,7 @@
         <div class="w-[90%] mx-auto">
             <h1 class="text-3xl font-semibold mb-5">Lista Prodotti</h1>
 
-            <table id="productTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
+            <table id="productTable" class="w-full bg-slate-500 table-auto text-white cell display">
                 <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
                     <tr>
                         <th class="text-start p-2">Id</th>

@@ -5,7 +5,7 @@
 
     <div class="py-12">
         <div class="w-[90%] mx-auto">
-            <h1 class="text-3xl font-semibold mb-5">Lista Aziende</h1>
+            <h1 class="text-[26px] font-bold mb-5">Lista Aziende</h1>
 
             <form class="form-inline z-10 absolute" method="GET" role="form">
                 <label for="perPage">Record:  </label>
@@ -17,8 +17,8 @@
                 </select>
             </form>
 
-            <table id="businessTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
-                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
+            <table id="businessTable" class="w-full table-auto bg-slate-500 text-white cell display">
+                <thead class="!border-b-[2px] !border-white uppercase bg-[#272E3B]">
                     <tr>
                         <th class="text-start p-2">Id</th>
                         <th class="text-start p-2">Nome</th>
@@ -28,14 +28,14 @@
                         <th class="text-start p-2">Cellulare</th>
                         <th class="text-start p-2">Creata</th>
                         <th class="text-start p-2">Eliminata</th>
-                        <th class=" min-w-[120px]">&nbsp;</th>
+                        <th class="max-w-[120px]">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($businesses as $bs )
                         @if ($bs->business == 'reneve')
                         @else
-                        <tr class="odd:bg-gray-600/50 even:bg-gray-600/100">
+                        <tr class="odd:bg-[#343F52] even:bg-[#3F4A5F]">
                             <td>{{$bs->id}}</td>
                             <td>{{$bs->business}}</td>
                             <td class="capitalize">{{$bs->type_business}}</td>
@@ -44,7 +44,7 @@
                             <td>{{$bs->mobile_phone_business}}</td>
                             <td>{{$bs->created_at->format('d-m-Y')}}</td>
                             <td>{{$bs->deleted_at ? $bs->deleted_at->format('d-m-Y') : ''}}</td>
-                            <td class="flex shrink gap-1">
+                            <td class="flex shrink gap-3">
                                 @if ($bs->deleted_at)
                                     <button data-modal-toggle="popup-modal-restore-delete{{$bs->id}}" title='restore' class='grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group'>
                                         <i class="fa-solid fa-trash-arrow-up"></i>
@@ -56,14 +56,14 @@
                                     </button>
                                     <x-modals.message modal='popup-modal-hard-delete{{$bs->id}}' :id='$bs->id' message='Elimina definitivamente' :name='$bs->business' route='admin.business.destroy'/>
                                 @else
-                                    <a href="{{route('admin.business.show', $bs->id)}}" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
-                                        <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
+                                    <a href="{{route('admin.business.show', $bs->id)}}" title="view" id="show-'.$id.'" class="grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#1EC981] group">
+                                        <img src="{{ asset('images/eyeglasses.svg') }}" alt="" class="scale-[1.2]">
                                     </a>
-                                    <a href="{{route('admin.business.edit', $bs->id)}}" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
-                                        <i class="fa-solid fa-pen-to-square text-yellow-500 group-hover:text-white"></i>
+                                    <a href="{{route('admin.business.edit', $bs->id)}}" title="update" id="edit-'.$id.'" class="grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#ABB1B1] group">
+                                        <img src="{{ asset('images/pensil.svg') }}" alt="" class="scale-[1.2]">
                                     </a>
-                                    <button data-modal-toggle="popup-modal-soft-delete{{$bs->id}}" title='soft delete' class='grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group'>
-                                        <i class="fa-solid fa-trash text-red-500 group-hover:text-white"></i>
+                                    <button data-modal-toggle="popup-modal-soft-delete{{$bs->id}}" title='soft delete' class='grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#EF5353] group'>
+                                        <img src="{{ asset('images/delete.svg') }}" alt="" class="scale-[1.2]">
                                     </button>
                                     <x-modals.message modal='popup-modal-soft-delete{{$bs->id}}' :id='$bs->id' message='Elimina' :name='$bs->business' route='admin.business.destroy'/>
                                 @endif
@@ -85,7 +85,7 @@
             $(document).ready( function () {
                 $('#businessTable').DataTable({
                     order: [[0, 'desc']],
-                    "sScrollY": "450px",
+                    "sScrollY": "480px",
                     "bPaginate":false,
                     "bInfo":false,
                     "oLanguage": {

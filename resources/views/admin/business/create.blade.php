@@ -1,7 +1,7 @@
 <x-admin-layout>
     <div class="pt-8">
         <div class="w-[90%] mx-auto overflow-hidden">
-            <h1 class="text-3xl font-semibold mb-5">Nuova Azienda</h1>
+            <h1 class="text-[26px] font-bold mb-5">Nuova Azienda</h1>
 
             <div class="relative pb-[55px]">
                 <form action="{{Route('admin.business.store')}}" method="post" enctype="multipart/form-data" class="flex gap-5 border-b pb-3 max-h-[750px]">
