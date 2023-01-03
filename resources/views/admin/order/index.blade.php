@@ -5,7 +5,7 @@
 
     <div class="py-12">
         <div class="w-[90%] mx-auto">
-            <h1 class="text-3xl font-semibold mb-5">Lista Ordini</h1>
+            <h1 class="text-[26px] font-bold mb-5">Lista Ordini</h1>
 
             <table id="orderTable" class="w-full bg-slate-500 table-auto text-white cell display">
                 <thead class="!border-b-[2px] !border-white uppercase bg-[#272E3B]">

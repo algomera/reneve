@@ -7,11 +7,11 @@
         <div class="w-[90%] mx-auto">
             <div class="flex justify-between items-center mb-10">
                 <div>
-                    <h1 class="text-3xl font-semibold">Ordine N° {{$order->id}}</h1>
+                    <h1 class="text-[26px] font-bold">Ordine N° {{$order->id}}</h1>
                     <p>Azienda ordinante: <strong class="tracking-[0.5px]">{{$order->business->business}}</strong></p>
                     <p>P.IVA: <strong class="tracking-[0.75px]">{{$order->business->p_iva_business}}</strong></p>
                 </div>
-                <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+                <a href="{{url()->previous()}}" class="px-7 py-3 bg-[#E5EAEA] text-[13px] font-bold uppercase text-[#7E8D9B] hover:bg-[#DCE2E2] tracking-[0.75px]">Indietro</a>
             </div>
 
             <h4 class="text-lg font-semibold">Note:</h4>
@@ -22,10 +22,10 @@
                 <p>Nessuna Nota..</p>
                 @endif
             </div>
-            <h3 class="text-2xl font-semibold mt-3 mb-[-45px] uppercase">Prodotti in Ordine</h3>
+            <h3 class="text-[22px] font-bold mt-3 mb-[-45px] uppercase">Prodotti in Ordine</h3>
 
-            <table id="orderTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
-                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
+            <table id="orderTable" class="w-full bg-slate-500 table-auto text-white cell display">
+                <thead class="!border-b-[2px] !border-white uppercase bg-[#272E3B]">
                     <tr>
                         <th class="text-start p-2">ID</th>
                         <th class="text-start p-2">REF</th>
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $pr )
-                        <tr class="odd:bg-gray-600/50 even:bg-gray-600/100">
+                        <tr class="odd:bg-[#343F52] even:bg-[#3F4A5F]">
                             <td>{{$pr->id}}</td>
                             <td>{{$pr->ref}}</td>
                             <td>{{$pr->business->business}}</td>

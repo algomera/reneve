@@ -2,13 +2,12 @@
     <div class="py-12">
         <div class="w-[90%] mx-auto">
             <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-semibold mb-5">Nuovo Prodotto</h1>
-                <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+                <h1 class="text-[26px] font-bold mb-5">Nuovo Prodotto</h1>
             </div>
 
-            <form action="{{Route('admin.warehouse.store')}}" method="post" class="flex bg-white p-5 shadow-lg relative">
+            <form action="{{Route('admin.warehouse.store')}}" method="post" class="flex relative">
                 @csrf
-                <div class="w-1/2 pr-5">
+                <div class="w-1/2 bg-white p-5 mr-5 shadow-lg">
                     <div >
                         <x-input-label for="name" :value="__('Nome*')" />
                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
@@ -29,7 +28,7 @@
                     <div class="flex gap-4 mt-4">
                         <div class="grow">
                             <x-input-label for="type" :value="__('Tipo*')" />
-                            <select name="type" id="type" name="type" class="w-full" required>
+                            <select name="type" id="type" name="type" class="w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                 <option disabled selected value="">Seleziona</option>
                                 <option value="10">tipo-1</option>
                                 <option value="20">tipo-2</option>
@@ -39,7 +38,7 @@
                         </div>
                         <div class="grow">
                             <x-input-label for="treatment" :value="__('Trattamento*')" />
-                            <select name="treatment" id="treatment" name="treatment" class="w-full" required>
+                            <select name="treatment" id="treatment" name="treatment" class="w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                 <option disabled selected value="">Seleziona</option>
                                 <option value="viso">viso</option>
                                 <option value="corpo">corpo</option>
@@ -50,7 +49,7 @@
                         </div>
                         <div class="grow">
                             <x-input-label for="product_line" :value="__('Linea Prodotto*')" />
-                            <select name="product_line" id="product_line" name="product_line" class="w-full" required>
+                            <select name="product_line" id="product_line" name="product_line" class="w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                 <option disabled selected value="">Seleziona</option>
                                 <option value="10">linea-1</option>
                                 <option value="20">linea-2</option>
@@ -61,10 +60,10 @@
                     </div>
                 </div>
 
-                <div class="w-1/2 border-l pl-5">
+                <div class="w-1/2 bg-white p-5 shadow-lg">
                     <div>
                         <x-input-label for="description" :value="__('Descrizione')" />
-                        <textarea id="description" name="description" cols="30" rows="5" class="block mt-1 w-full" type="text" description="description" :value="old('description')" autofocus />
+                        <textarea id="description" name="description" cols="30" rows="5" class="block mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="text" description="description" :value="old('description')" autofocus />
                         </textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
@@ -76,7 +75,7 @@
                     <div class="flex gap-3 mt-4">
                         <div class="w-1/2">
                             <x-input-label for="discount" :value="__('Tipo Proposta')" />
-                            <select name="product_line" id="product_line" name="product_line" class="mt-1 w-full">
+                            <select name="product_line" id="product_line" name="product_line" class="mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option disabled selected value="">Seleziona</option>
                                 <option value="10">Standard</option>
                                 <option value="20">Platinum</option>
@@ -101,7 +100,11 @@
                     </div>
                 </div>
 
-                <button type="submit" class="absolute bottom-5 right-5 border px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-green-800/70 tracking-[0.75px] ">Registra</button>
+                <div class="absolute bottom-[-60px] right-0 flex gap-3">
+                    <a href="{{url()->previous()}}" class="px-7 py-3 bg-[#E5EAEA] text-[13px] font-bold uppercase text-[#7E8D9B] hover:bg-[#DCE2E2] tracking-[0.75px]">Indietro</a>
+
+                    <button type="submit" class="px-7 py-3 bg-[#6EA0FF] text-[13px] font-bold uppercase text-white hover:bg-[#85AFFD] tracking-[0.75px]">Registra</button>
+                </div>
             </form>
 
         </div>

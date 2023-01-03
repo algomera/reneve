@@ -3,7 +3,7 @@
         <div class="w-[90%] mx-auto">
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold mb-5">Servizio: {{$provider->name}}</h1>
-                <a href="{{url()->previous()}}" class="border-[2px] border-gray-800/80 px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-transparent hover:text-black tracking-[0.75px]">Indietro</a>
+                <a href="{{url()->previous()}}" class="px-7 py-3 bg-[#E5EAEA] text-[13px] font-bold uppercase text-[#7E8D9B] hover:bg-[#DCE2E2] tracking-[0.75px]">Indietro</a>
             </div>
 
             <div class="w-full bg-white shadow-lg p-5 mt-5 flex">
