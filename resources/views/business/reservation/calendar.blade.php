@@ -137,10 +137,7 @@
                 //Define finish
                 var start = moment(document.querySelector('#start_time').value, 'YYYY-MM-DDTHH:mm');
                 var finish = start.add(duration,'m').format('YYYY-MM-DDTHH:mm');
-                // console.log(document.querySelector('#start_time').value);
-                // console.log(start.add(duration,'m').format('YYYY-MM-DDTHH:mm'));
                 document.querySelector('#finish_time').value = finish;
-                return duration;
             };
 
             document.addEventListener('DOMContentLoaded', function () {
@@ -197,7 +194,7 @@
                     dateClick: function(date) {
                         var i = date.date;
 
-                        document.querySelector('#start_time').value = moment(i).toISOString().slice(0,16);
+                        document.querySelector('#start_time').value = i.toISOString().slice(0,16);
 
                         // i.setMinutes(i.getMinutes() + 45);
                         // document.querySelector('#finish_time').value = i.toISOString().slice(0,16);
