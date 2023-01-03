@@ -20,6 +20,11 @@ window.listPlugin = listPlugin;
 import interaction from '@fullcalendar/interaction';
 window.interaction = interaction;
 
+//Moment
+import moment from 'moment';
+window.moment = moment;
+moment().format();
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;

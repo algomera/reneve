@@ -26,7 +26,7 @@
                                 <div class="flex flex-col justify-start gap-4 grow">
                                     <div>
                                         <x-input-label for="user_id" :value="__('Paziente')" class="w-fit" />
-                                        <select name="user_id" id="user_id" name="user_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0">
+                                        <select name="user_id" id="user_id" name="user_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($patients as $patient )
                                                 <option value="{{$patient->id}}">{{$patient->name . ' ' . $patient->last_name}}</option>
@@ -37,7 +37,7 @@
 
                                     <div>
                                         <x-input-label for="cabin_id" :value="__('Cabina')" class="w-fit" />
-                                        <select name="cabin_id" id="cabin_id" name="cabin_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0">
+                                        <select name="cabin_id" id="cabin_id" name="cabin_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($cabins as $cabin )
                                                 <option value="{{$cabin->id}}">{{$cabin->name}}</option>
@@ -48,7 +48,7 @@
 
                                     <div>
                                         <x-input-label for="provider_id" :value="__('Servizio')" class="w-fit" />
-                                        <select onchange="selectProvider()" name="provider_id" id="provider_id" name="provider_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0">
+                                        <select onchange="selectProvider()" name="provider_id" id="provider_id" name="provider_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($providers as $provider )
                                                 <option value="{{$provider->id}}">{{$provider->name}}</option>
@@ -133,7 +133,13 @@
                     });
                     return duration;
                 }();
-                console.log(duration);
+
+                //Define finish
+                var start = moment(document.querySelector('#start_time').value, 'YYYY-MM-DDTHH:mm');
+                var finish = start.add(duration,'m').format('YYYY-MM-DDTHH:mm');
+                // console.log(document.querySelector('#start_time').value);
+                // console.log(start.add(duration,'m').format('YYYY-MM-DDTHH:mm'));
+                document.querySelector('#finish_time').value = finish;
                 return duration;
             };
 
@@ -189,26 +195,12 @@
 
                     // funtion open modal Reservation
                     dateClick: function(date) {
-                        // console.log(date);
                         var i = date.date;
-                        // const startDate = new Date(date.dateStr);
-                        // const endDateTmp = startDate.setMinutes(startDate.getMinutes() + 20);
-                        // const endDate = new Date(endDateTmp);
-                        // console.log(startDate);
 
-                        // console.log(endDate);
-                        document.querySelector('#start_time').value = i.toISOString().slice(0,16);
+                        document.querySelector('#start_time').value = moment(i).toISOString().slice(0,16);
 
-                        // var test = this.addEvent({
-                        //     title: 'The Title',
-                        //     start: i.toISOString().slice(0,16),
-                        //     end: i.setMinutes(i.getMinutes() + 45),
-                        // });
-                        // // test.setEnd(i.setMinutes(i.getMinutes() + 60))
-                        // console.log(test);
-
-                        i.setMinutes(i.getMinutes() + 45);
-                        document.querySelector('#finish_time').value = i.toISOString().slice(0,16);
+                        // i.setMinutes(i.getMinutes() + 45);
+                        // document.querySelector('#finish_time').value = i.toISOString().slice(0,16);
 
                         document.querySelector('#reservation').classList.toggle('hidden');
                     },
