@@ -34,10 +34,10 @@ class ProductSeeder extends Seeder
             '30' => 30
         ];
 
-        for ($i=1; $i < 501 ; $i++) {
+        for ($i=1; $i < 51 ; $i++) {
             for ($p=0; $p < 5; $p++) {
                 $product = Product::create([
-                    'business_id' => mt_rand(1, 51),
+                    'business_id' => mt_rand(1, 11),
                     'name' => fake()->word(),
                     'description' => fake()->paragraph(),
                     'ref' => fake()->isbn13(),

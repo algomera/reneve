@@ -15,7 +15,7 @@ class CabinSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=2; $i < 52; $i++) {
+        for ($i=2; $i < 12; $i++) {
             for ($m=0; $m < 5 ; $m++) {
                 Cabin::create([
                     'business_id' => $i,

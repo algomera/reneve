@@ -28,7 +28,7 @@ class OrderSeeder extends Seeder
             'annullato' => 'annullato',
         ];
 
-        for ($i=2; $i < 52; $i++) {
+        for ($i=2; $i < 12; $i++) {
             for ($m=0; $m < 10 ; $m++) {
                 Order::create([
                     'business_id' => $i,

@@ -44,11 +44,11 @@ class BusinessSeeder extends Seeder
 
         $reneve->user()->attach(1);
 
-        for ($i=0; $i < 50 ; $i++) {
+        for ($i=0; $i < 10 ; $i++) {
             $name = fake()->name;
             $business = Business::create([
                 'business' => $name,
-                'logo' => fake()->imageUrl(350, 350, 'animal', true, 'dogs', true, 'png'),
+                'logo' => null,
                 'p_iva_business' =>  '12312312312',
                 'address_business' => fake()->streetAddress(),
                 'telephone_business' => fake()->phoneNumber(),
