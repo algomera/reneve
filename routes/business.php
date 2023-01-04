@@ -14,5 +14,6 @@ Route::middleware(['auth', 'verified', 'VerifyIsBusiness'])->name('business.')->
 //Reservetion
     Route::get('reservation', [ReservationController::class, 'create'])->name('reservation.create');
     Route::post('reservation', [ReservationController::class, 'store'])->name('reservation.store');
+    Route::delete('reservation/destroy/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
     Route::get('calendar', CalendarController::class)->name('calendar');
 });

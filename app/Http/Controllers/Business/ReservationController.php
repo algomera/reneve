@@ -36,4 +36,11 @@ class ReservationController extends Controller
 
         return redirect()->route('business.calendar')->with('message', "Prenotazione inserita!");
     }
+
+    public function destroy($id) {
+        $reservation = Reservation::find($id);
+        $reservation->delete();
+        return  redirect()->back()->with('message', "Prenotazione Eliminata!");
+    }
+
 }

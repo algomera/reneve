@@ -26,7 +26,7 @@
                                 <div class="flex flex-col justify-start gap-4 grow">
                                     <div>
                                         <x-input-label for="user_id" :value="__('Paziente')" class="w-fit" />
-                                        <select name="user_id" id="user_id" name="user_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
+                                        <select name="user_id" id="user_id" name="user_id" class="mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($patients as $patient )
                                                 <option value="{{$patient->id}}">{{$patient->name . ' ' . $patient->last_name}}</option>
@@ -37,7 +37,7 @@
 
                                     <div>
                                         <x-input-label for="cabin_id" :value="__('Cabina')" class="w-fit" />
-                                        <select name="cabin_id" id="cabin_id" name="cabin_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
+                                        <select name="cabin_id" id="cabin_id" name="cabin_id" class="mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($cabins as $cabin )
                                                 <option value="{{$cabin->id}}">{{$cabin->name}}</option>
@@ -48,10 +48,10 @@
 
                                     <div>
                                         <x-input-label for="provider_id" :value="__('Servizio')" class="w-fit" />
-                                        <select onchange="selectProvider()" name="provider_id" id="provider_id" name="provider_id" class="mt-1 w-full focus:border-current rounded-md focus:ring-0" required>
+                                        <select onchange="selectProvider()" name="provider_id" id="provider_id" name="provider_id" class="mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                             <option disabled selected value="">Seleziona</option>
                                             @foreach ($providers as $provider )
-                                                <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                                <option value="{{$provider->id}}" class="capitalize font-medium">{{$provider->name}} ({{$provider->duration}} Min)</option>
                                             @endforeach
                                         </select>
                                         <x-input-error :messages="$errors->get('provider_id')" class="mt-2" />
@@ -71,7 +71,7 @@
                                     </div>
                                     <div>
                                         <x-input-label for="note" :value="__('Note')" class="w-fit" />
-                                        <textarea id="note" name="note" cols="30" rows="5" class="block mt-1 w-full focus:border-current rounded-md focus:ring-0" type="text" :value="old('note')" autofocus />
+                                        <textarea id="note" name="note" cols="30" rows="5" class="block mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="text" :value="old('note')" autofocus />
                                         </textarea>
                                         <x-input-error :messages="$errors->get('note')" class="mt-2" />
                                     </div>
@@ -91,14 +91,22 @@
             {{-- Modal Info reservation --}}
             <div id="modal-info" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-50 h-full w-[87%] bg-black/25">
                 <div class="w-full h-full flex justify-center items-start">
-                    <div class="bg-white p-5 relative w-[650px] rounded-md mt-5 ">
-                        <h3 class=" text-xl font-bold tracking-[0.75px] uppercase text-start mb-4">Prenotazione</h3>
-
-                        <div id="modal-infoContent"></div>
+                    <div class="bg-white flex justify-between items-end p-5 relative w-[650px] rounded-md mt-5 ">
+                        <div>
+                            <h3 class=" text-xl font-bold tracking-[0.75px] uppercase text-start mb-4">Prenotazione</h3>
+                            <div id="modal-infoContent"></div>
+                        </div>
+                        <div class="flex gap-3">
+                            <form id="delete" action="" method="post">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="delete px-7 py-3 bg-red-500 text-[13px] text-white font-bold uppercase hover:bg-red-500/80 tracking-[0.75px]">
+                                    Elimina
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -143,6 +151,8 @@
             document.addEventListener('DOMContentLoaded', function () {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new Calendar(calendarEl, {
+                    editable: false,
+                    selectable: true,
                     plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interaction ],
                     locale: 'it',
                     timeZone: 'Europe/Rome',
@@ -152,16 +162,18 @@
                     slotMinTime: '8:00:00',
                     slotMaxTime: '20:00:00',
                     nowIndicator: true,
+                    slotEventOverlap: false,
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                     },
                     buttonText: {
                         today:    'Oggi',
                         month:    'Mese',
                         week:     'Settimana',
                         day:      'Intera giornata',
+                        list:     'Agenda'
                     },
                     businessHours: {
                         daysOfWeek: [ 1, 2, 3, 4, 5, 6 ],
@@ -172,6 +184,7 @@
                     slotDuration: '00:10:00',
                     slotLabelInterval: '00:10:00',
                     dayMaxEventRows: true,
+                    eventMaxStack: 3,
                     views: {
                         dayGrid: {
                             dayMaxEventRows: 5,
@@ -187,26 +200,35 @@
                             titleFormat: { day: 'numeric', month: 'long', year: 'numeric' }
                         },
                     },
-                    editable: false,
-                    selectable: false,
 
-                    // funtion open modal Reservation
+                    // funtion open modal Reservation and set start
                     dateClick: function(date) {
                         var i = date.date;
-
                         document.querySelector('#start_time').value = i.toISOString().slice(0,16);
 
-                        // i.setMinutes(i.getMinutes() + 45);
-                        // document.querySelector('#finish_time').value = i.toISOString().slice(0,16);
+                        var all_events = calendar.getEvents();
+                        var current = [];
+                        var col = @json($collaborators);
 
-                        document.querySelector('#reservation').classList.toggle('hidden');
+                        all_events.forEach(function(event) {
+                            if (event.startStr <= date.dateStr && event.endStr > date.dateStr) {
+                                current.push(event)
+                            }
+                        });
+
+                        if (current.length == col ) {
+                            alert('Le prenotazioni per questo orario sono piene!');
+                        } else {
+                            document.querySelector('#reservation').classList.toggle('hidden');
+                        }
+
                     },
 
                     // function open molad Info
-                    eventClick: function(info) {
+                    eventClick: function(event) {
                         //set date
                         function formatDate(date) {
-                            var hours = date.getHours();
+                            var hours = (date.getHours() - 1) ;
                             var minutes = date.getMinutes();
                             var ampm = hours >= 12 ? 'PM' : 'AM';
                             hours = hours % 12;
@@ -218,16 +240,24 @@
 
                         document.querySelector('#modal-info').classList.toggle('hidden');
                         document.querySelector('#modal-infoContent').innerHTML =
-                            '<b>Cliente: </b>' + info.event.title + '<br>' +
-                            '<b>Cabina: </b>' + info.event.extendedProps.cabin  + '<br>' +
-                            '<b>Trattamento: </b>' + info.event.extendedProps.provider + '<br>'  +
-                            '<b>Inizio: </b>' + formatDate(info.event.start) + '<br>' +
-                            '<b>Fine: </b>' + formatDate(info.event.end)
+                            '<b>Cliente: </b>' + event.event.title + '<br>' +
+                            '<b>Cabina: </b>' + event.event.extendedProps.cabin  + '<br>' +
+                            '<b>Trattamento: </b>' + event.event.extendedProps.provider + '<br>'  +
+                            '<b>Inizio: </b>' + formatDate(event.event.start) + '<br>' +
+                            '<b>Fine: </b>' + formatDate(event.event.end)
                         ;
+
+                        $('.delete').click(function() {
+                            var id = event.event.id;
+                            const form = document.querySelector('#delete');
+
+                            form.setAttribute("action", "{{ route('business.reservation.destroy', '') }}" +'/'+ id);
+                        });
                     },
 
                     events: @json($events),
                 });
+
                 calendar.render();
             });
         </script>

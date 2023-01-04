@@ -23,6 +23,7 @@ class CalendarController extends Controller
 
         foreach ($reservations as $reservation) {
             $events[] = [
+                'id' => $reservation->id,
                 'title' => $reservation->user->name,
                 'cabin' => $reservation->cabin->name,
                 'provider' => $reservation->provider->name . ' ' .'('. $reservation->provider->duration .') Min.',
@@ -35,7 +36,8 @@ class CalendarController extends Controller
         $patients = $business->user()->whereRole('patient')->get();
         $cabins = $business->cabin;
         $providers = $business->providers;
+        $collaborators = count($business->user()->wherePivot('business_id', $business->id)->whereRole('collaborator')->get());
 
-        return view('business.reservation.calendar', compact('events', 'patients', 'cabins', 'providers'));
+        return view('business.reservation.calendar', compact('events', 'patients', 'cabins', 'providers', 'collaborators'));
     }
 }

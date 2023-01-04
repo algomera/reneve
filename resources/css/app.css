@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* DataTables */
 .dataTables_filter {
     @apply !w-[426px]
 }
@@ -23,7 +23,6 @@
     .dataTables_paginate .next {
         @apply  text-[14px] font-bold
     }
-
 }
 .cell tbody tr {
     @apply odd:bg-[#343F52] even:bg-[#3F4A5F]
@@ -56,5 +55,20 @@
 
 #orderTable {
     @apply border-b border-[#E5EAEA] pb-3 mb-2 bg-transparent
+}
+/* /DataTables */
+
+/* FullCalendar */
+.fc-button-group {
+    @apply gap-2
+}
+.fc-button-group button {
+    @apply !rounded-md !bg-[#E5EAEA] !border-none !text-[14px] !text-[#7E8D9B] !font-bold !px-5 !uppercase tracking-[.75px] hover:brightness-110 shadow-md
+}
+.fc-today-button {
+    @apply !rounded-md !bg-slate-600 !border-2 !text-[14px] !text-white !font-bold !px-5 !uppercase tracking-[.75px] hover:brightness-110 shadow-md
+}
+.fc-button-group .fc-button-active {
+    @apply brightness-110  hover:brightness-110
 }
 
