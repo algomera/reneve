@@ -1,9 +1,11 @@
 <nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-900/90 flex-col">
 
+    {{-- AZIENDA --}}
     <div class="flex justify-center p-6 items-center space-x-3 w-full">
         <img src="{{ asset('images/logo_reneve.svg') }}" alt="">
     </div>
 
+    {{-- UTENTE LOGGATO --}}
     <div class="mt-5 flex flex-col justify-start items-center gap-5 px-4 w-full border-gray-400 border-b-[2px] pb-5 ">
         <x-nav-link
             class="flex jusitfy-center items-center gap-4 space-x-5 p-3 w-full text-white rounded capitalize text-[18px] font-semibold"
@@ -44,6 +46,7 @@
         </x-dropdown>
     </div>
 
+    {{-- AZIENDE --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full ">
         <button onclick="dropdown1()" class="{{request()->routeIs('admin.business.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Aziende</p>
@@ -68,6 +71,7 @@
         </div>
     </div>
 
+    {{-- DISPOSITIVI --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
         <button onclick="dropdown2()" class="{{request()->routeIs('admin.service.*') ? 'text-[#6EA0FF] font-bold text-lg': 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Dispositivi <br> Servizi</p>
@@ -92,6 +96,7 @@
         </div>
     </div>
 
+    {{-- ORDINI --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
         <button onclick="dropdown3()" class="{{request()->routeIs('admin.order.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14  ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Ordini</p>
@@ -114,6 +119,7 @@
         </div>
     </div>
 
+    {{-- MAGAZZINO --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full">
         <button onclick="dropdown4()" class="{{request()->routeIs('admin.warehouse.*') ? 'text-[#6EA0FF] font-bold text-lg' : 'text-sm'}} focus:outline-none focus:text-[#6EA0FF]  text-white flex justify-between items-center w-full py-5 space-x-14  ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Magazzino</p>

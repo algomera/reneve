@@ -71,4 +71,16 @@
 .fc-button-group .fc-button-active {
     @apply brightness-110  hover:brightness-110
 }
+.fc-timegrid-event-harness {
+    @apply max-w-[200px]
+}
+.fc-timegrid-event-harness a {
+    @apply  !font-semibold !text-[14px]
+}
+.fc-daygrid-event-harness a {
+    @apply  !font-bold !text-[14px] text-[#6B7A88]
+}
+.fc-daygrid-day-top a {
+    @apply bg-[#E5EAEA] text-[#7E8D9B] font-semibold rounded-full w-7 h-7 mt-1 mr-1 flex justify-center items-center shadow-slate-500 shadow-sm
+}
 
