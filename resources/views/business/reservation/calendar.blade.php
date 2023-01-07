@@ -155,7 +155,7 @@
                     return duration;
                 }();
 
-                //Define finish
+                //Set input finish DateTime
                 var start = moment(document.querySelector('#start_time').value, 'YYYY-MM-DDTHH:mm');
                 var finish = start.add(duration,'m').format('YYYY-MM-DDTHH:mm');
                 document.querySelector('#finish_time').value = finish;
@@ -208,20 +208,31 @@
                             eventMaxStack: 10,
 
                             // funtion open modal Reservation, set start, verify free collaborator
-                            dateClick: function(date) {
+                            dateClick: function(date, allDay, jsEvent, view) {
+                                // Set input start dateTime
                                 var i = date.date;
                                 document.querySelector('#start_time').value = i.toISOString().slice(0,16);
 
-                                var all_events = calendar.getEvents();
-                                var current = [];
-                                var slot = [];
-                                var col = @json($collaborators);
+                                var all_events = calendar.getEvents(); // all event from business
+                                var dayEvents = [];  // all event from day
+                                var current = []; // current event from hour selected
+                                var slot = []; // slots Time occupied by events
+                                var col = @json($collaborators); // number collaborator
                                 var start = moment(date.dateStr, 'YYYY-MM-DDTHH:mm');
+                                var verifyEnd = moment(date.dateStr, 'YYYY-MM-DDTHH:mm');
                                 var minute = 0;
-                                var minuteRestant = 0;
+                                var minuteRemaining = 0;
 
+                                // filter to Day clicked
                                 all_events.forEach(function(event) {
+                                    if (date.dayEl.attributes[1].value === moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')) {
+                                        dayEvents.push(event);
+                                    }
+                                });
 
+                                // function check minute free for new reservation
+                                dayEvents.forEach(function(event) {
+                                    //verify current reservation from hour clicked
                                     if (event.startStr <= date.dateStr && event.endStr > date.dateStr) {
                                         current.push(event)
                                     }
@@ -230,14 +241,14 @@
 
                                         while (slot.length < col) {
 
-                                            all_events.forEach(function(event) {
+                                            dayEvents.forEach(function(event) {
                                                 //check reservation to slot Time
                                                 if (moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') <= start.format('YYYY-MM-DDTHH:mm') && moment(event.endStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') > start.format('YYYY-MM-DDTHH:mm')) {
                                                     // check if contain reservation
                                                     if (!slot.includes(event.id)) {
                                                         // insert to array
                                                         slot.push(event.id);
-                                                        console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
+                                                        // console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
                                                     }
                                                 }
                                             });
@@ -250,15 +261,25 @@
                                             start.add(10,'m').format('HH:mm');
                                         }
                                     }
+
+                                    // Count minutes remaining
+                                    while (verifyEnd.format('HH:mm') < '20:00') {
+                                        minuteRemaining = minuteRemaining += 10;
+                                        verifyEnd.add(10,'m').format('HH:mm');
+                                    }
+
+                                    // set minute to null for future reservation
+                                    if (minute == 0) {
+                                        minute = null;
+                                    }
                                 });
 
-                                console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute);
+                                //  console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining);
 
-                                // console.log(@json($providers)[0].duration);
                                 if (current.length >= col ) {
                                     alert('Le prenotazioni per questo orario sono piene!');
                                 } else {
-                                     document.querySelector('#reservation').classList.toggle('hidden');
+                                    document.querySelector('#reservation').classList.toggle('hidden');
                                 }
 
                             },
