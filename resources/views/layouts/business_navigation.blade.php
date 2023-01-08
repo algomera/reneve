@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-900/90 flex-col">
+<nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-900/90 flex-col z-[100]">
 
     {{-- AZIENDA --}}
     <div class="flex justify-center p-6 items-center space-x-3 w-full">

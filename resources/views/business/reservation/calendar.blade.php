@@ -50,9 +50,6 @@
                                         <x-input-label for="provider_id" :value="__('Servizio')" class="w-fit" />
                                         <select onchange="selectProvider()" name="provider_id" id="provider_id" name="provider_id" class="mt-1 w-full rounded-md border-gray-500/30 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                                             <option disabled selected value="">Seleziona</option>
-                                            @foreach ($providers as $provider )
-                                                <option value="{{$provider->id}}" class="capitalize font-medium">{{$provider->name}} ({{$provider->duration}} Min)</option>
-                                            @endforeach
                                         </select>
                                         <x-input-error :messages="$errors->get('provider_id')" class="mt-2" />
                                     </div>
@@ -88,8 +85,8 @@
                 </div>
             </div>
 
-            {{-- Modal Info reservation --}}
-            <div id="modal-info" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-50 h-full w-[87%] bg-black/25">
+            {{-- Modal Info reservation and delete --}}
+            <div id="modal-info" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-50 h-full w-full bg-black/25">
                 <div class="w-full h-full flex justify-center items-start">
                     <div class="bg-white flex justify-between items-end p-5 relative w-[650px] rounded-md mt-5 ">
                         <div>
@@ -138,26 +135,9 @@
                 const valueProvider = provider.options[provider.selectedIndex].value;
                 let duration;
 
-                // get provider duration from id
-                let requestDuration = function() {
-                    $.ajax({
-                        url: "http://127.0.0.1:8000/api/provider",
-                        type: "GET",
-                        dataType: "json",
-                        async: false,
-                        success: function(data){
-                            duration = data[valueProvider*1 -1].duration;
-                        },
-                        error: function(error){
-                            console.log(error);
-                        }
-                    });
-                    return duration;
-                }();
-
                 //Set input finish DateTime
                 var start = moment(document.querySelector('#start_time').value, 'YYYY-MM-DDTHH:mm');
-                var finish = start.add(duration,'m').format('YYYY-MM-DDTHH:mm');
+                var finish = start.add(valueProvider,'m').format('YYYY-MM-DDTHH:mm');
                 document.querySelector('#finish_time').value = finish;
             };
 
@@ -215,18 +195,28 @@
 
                                 var all_events = calendar.getEvents(); // all event from business
                                 var dayEvents = [];  // all event from day
+                                var eventFuture = []; // event future to slot Time selected
                                 var current = []; // current event from hour selected
                                 var slot = []; // slots Time occupied by events
+                                var providers = []; // providers possible at that time
                                 var col = @json($collaborators); // number collaborator
                                 var start = moment(date.dateStr, 'YYYY-MM-DDTHH:mm');
                                 var verifyEnd = moment(date.dateStr, 'YYYY-MM-DDTHH:mm');
                                 var minute = 0;
                                 var minuteRemaining = 0;
+                                var providersDuration = [];
 
                                 // filter to Day clicked
                                 all_events.forEach(function(event) {
                                     if (date.dayEl.attributes[1].value === moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')) {
                                         dayEvents.push(event);
+                                    }
+                                });
+
+                                // filter event future to slot Time
+                                dayEvents.forEach(function(event) {
+                                    if (event.startStr > date.dateStr) {
+                                        eventFuture.push(event);
                                     }
                                 });
 
@@ -241,17 +231,22 @@
 
                                         while (slot.length < col) {
 
-                                            dayEvents.forEach(function(event) {
-                                                //check reservation to slot Time
-                                                if (moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') <= start.format('YYYY-MM-DDTHH:mm') && moment(event.endStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') > start.format('YYYY-MM-DDTHH:mm')) {
-                                                    // check if contain reservation
-                                                    if (!slot.includes(event.id)) {
-                                                        // insert to array
-                                                        slot.push(event.id);
-                                                        // console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
+                                            if (eventFuture.length >= col) {
+                                                dayEvents.forEach(function(event) {
+                                                    //check reservation to slot Time
+                                                    if (moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') <= start.format('YYYY-MM-DDTHH:mm') && moment(event.endStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') > start.format('YYYY-MM-DDTHH:mm')) {
+                                                        // check if contain reservation
+                                                        if (!slot.includes(event.id)) {
+                                                            // insert to array
+                                                            slot.push(event.id);
+                                                            // console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                            } else {
+                                                slot.length = col;
+                                                minute = null;
+                                            }
 
                                             // add 10 minutes to variable minute
                                             if (slot.length < col) {
@@ -274,15 +269,47 @@
                                     }
                                 });
 
-                                //  console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining);
+                                var optionProvider = '<option disabled selected value="">Seleziona</option>';
+
+                                // filter providers by value duration
+                                @json($providers).forEach(function(pv) {
+                                    if (pv.duration <= minute || minute == null) {
+                                        providers.push(pv);
+                                        optionProvider +=  '<option value=' + pv.duration + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
+
+                                    }
+                                    providersDuration.push(pv.duration);
+
+                                    // find minimum duration provider
+                                    Array.prototype.min = function() {
+                                        return Math.min.apply(null, this);
+                                    };
+
+                                    // find maximum duration provider
+                                    Array.prototype.max = function() {
+                                        return Math.max.apply(null, this);
+                                    };
+                                });
+
+                                var min = providersDuration.min(); // provider with minimum duration
+                                var max = providersDuration.max(); // provider with maximum duration
+
+                                // Insert provider to select
+                                document.querySelector('#provider_id').innerHTML = optionProvider;
 
                                 if (current.length >= col ) {
                                     alert('Le prenotazioni per questo orario sono piene!');
+                                } else if (moment().format('YYYY-MM-DD') > date.dayEl.attributes[1].value) {
+                                    alert('Non si possono inserire prenotazioni in date gia trascorse!')
+                                } else if (minute < min && minute != null || minuteRemaining < min) {
+                                    alert('Il tempo rimanente in questa fascia oraria e insufficente per inserire nuove prenotazioni!')
                                 } else {
                                     document.querySelector('#reservation').classList.toggle('hidden');
                                 }
-
+                                // console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining, ' | servizi possibili:', providers);
                             },
+
+                            // Show info event clicked
                             eventContent: function(event) {
                                 var main =
                                     '• ' +event.event.title + ' ' +
