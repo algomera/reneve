@@ -16,18 +16,18 @@ class PatientController extends Controller
         $id = $user->id;
 
         $buttonShow =
-            '<a href="'.route('business.patient.show', $id).'" title="view" id="show-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-green-500/80 rounded-md hover:bg-green-500/80 group">
-                <i class="fa-regular fa-eye text-green-500 group-hover:text-white"></i>
+            '<a href="'.route('business.patient.show', $id).'" title="view" id="show-'.$id.'" class="grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#1EC981] group">
+                <img src="'. asset('images/eyeglasses.svg') .'" alt="" class="scale-[1.2]">
             </a>';
 
         $buttonEdit =
-            '<a href="'.route('business.patient.edit', $id).'" title="update" id="edit-'.$id.'" class="grow flex justify-center items-center py-1 border-[2px] border-yellow-500/80 rounded-md hover:bg-yellow-500/80 group">
-                <i class="fa-solid fa-pen-to-square text-yellow-500 group-hover:text-white"></i>
+            '<a href="'.route('business.patient.edit', $id).'" title="update" id="edit-'.$id.'" class="grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#ABB1B1] group">
+                <img src="'. asset('images/pensil.svg') .'" alt="" class="scale-[1.2]">
             </a>';
 
         $buttonDelete =
-            '<button type="button" href="'.route('business.patient.destroy', $id).'" title="delete" class="ajax grow flex justify-center items-center py-1 border-[2px] rounded-md border-red-500/80 hover:bg-red-500/80 group">
-                <i class="fa-solid fa-trash text-red-500 group-hover:text-white"></i>
+            '<button type="button" href="'.route('business.patient.destroy', $id).'" title="delete" class="ajax grow flex justify-center w-[36px] h-[30px] hover:bg-[#27272A] items-center rounded-md bg-[#EF5353] group">
+                <img src="'. asset('images/delete.svg') .'" alt="" class="scale-[1.2]">
             </button>';
 
         return $buttonShow.$buttonEdit.$buttonDelete;
@@ -47,7 +47,7 @@ class PatientController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
                     return
-                    '<div class="flex shrink gap-1">
+                    '<div class="flex justify-center items-center gap-3">
                         '.$this->getUserButtons($data).'
                     </div>';
                 })->editColumn('name', function($data){

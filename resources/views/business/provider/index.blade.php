@@ -5,7 +5,7 @@
 
     <div class="py-12">
         <div class="w-[90%] mx-auto">
-            <h1 class="text-3xl font-semibold mb-5">Lista Trattamenti</h1>
+            <h1 class="text-[26px] font-bold mb-5">Lista Trattamenti</h1>
 
             <table id="providersTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl display cell">
                 <thead class="!border-b-[2px] !border-white uppercase">

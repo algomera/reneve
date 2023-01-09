@@ -5,10 +5,10 @@
 
     <div class="py-12">
         <div class="w-[90%] mx-auto">
-            <h1 class="text-3xl font-semibold mb-5">Lista Pazienti</h1>
+            <h1 class="text-[26px] font-bold mb-5">Lista Pazienti</h1>
 
-            <table id="patientTable" class="w-full bg-slate-500 table-auto text-white shadow-2xl cell-border display">
-                <thead class="!border-b-[2px] !border-white uppercase bg-gray-900/60">
+            <table id="patientTable" class="w-full table-auto bg-slate-500 text-white cell display">
+                <thead class="!border-b-[2px] !border-white uppercase bg-[#272E3B]">
                     <tr>
                         <th class="text-start p-2">Id</th>
                         <th class="text-start p-2">Paziente</th>
