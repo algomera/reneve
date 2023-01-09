@@ -135,7 +135,7 @@
             </x-nav-link>
             <x-nav-link
                 class="uppercase text-[12px] font-bold flex jusitfy-center items-center gap-3 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 ml-4 !pb-0 !pt-1 mt-1"
-                :href="route('business.patient.create')" :active="request()->routeIs('')"
+                :href="route('business.warehouse.create')" :active="request()->routeIs('business.warehouse.create')"
             >
                 <i class="fa-solid fa-plus"></i>
                 {{ __('Aggiungi') }}

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('qta');
             $table->boolean('put_of_print')->default(false);
             $table->tinyInteger('discount')->nullable();
-            $table->boolean('price_visible')->default(true);
+            $table->boolean('price_visible');
             $table->timestamps();
         });
     }

@@ -566,7 +566,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="mt-4 border px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-green-800/70 tracking-[1px] uppercase ">Registra</button>
+                    <button type="submit" class="mt-4 border px-5 py-2 rounded-md bg-gray-800/80 text-white hover:bg-green-800/70 tracking-[1px] uppercase ">Modifica</button>
                 </div>
             </form>
 

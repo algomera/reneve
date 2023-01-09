@@ -1,11 +1,11 @@
-<x-admin-layout>
+<x-business-layout>
     <div class="py-12">
         <div class="w-[90%] mx-auto">
             <div class="flex justify-between items-center">
                 <h1 class="text-[26px] font-bold mb-5">Nuovo Prodotto</h1>
             </div>
 
-            <form action="{{Route('admin.warehouse.store')}}" method="post" class="flex relative">
+            <form action="{{Route('business.warehouse.store')}}" method="post" class="flex relative">
                 @csrf
                 <div class="w-1/2 bg-white p-5 mr-5 shadow-lg">
                     <div >
@@ -91,11 +91,16 @@
                             <x-input-error :messages="$errors->get('qta')" class="mt-2" />
                         </div>
                     </div>
-                    <div>
+                    <div class="flex gap-10 mt-4">
                         <div class="mt-4 flex gap-3 items-center mb-10">
                             <x-input-label for="put_of_print" :value="__('Fuori catalogo')" />
                             <x-text-input id="put_of_print" type="checkbox" name="put_of_print" :value="old('put_of_print', 1)" autofocus />
                             <x-input-error :messages="$errors->get('put_of_print')" class="mt-2" />
+                        </div>
+                        <div class="mt-4 flex gap-3 items-center mb-10">
+                            <x-input-label for="price_visible" :value="__('Prezzo visibile')" />
+                            <x-text-input checked id="price_visible" type="checkbox" name="price_visible" :value="old('price_visible', 1)" autofocus />
+                            <x-input-error :messages="$errors->get('price_visible')" class="mt-2" />
                         </div>
                     </div>
                 </div>
@@ -109,4 +114,4 @@
 
         </div>
     </div>
-</x-admin-layout>
+</x-business-layout>

@@ -95,7 +95,7 @@ class WarehouseController extends Controller
         $validated['business_id'] = $user;
 
         Product::create($validated);
-        return redirect()->route('warehouse.index')->with('message', "Nuovo Prodotto $validated[name] inserito!");
+        return redirect()->route('admin.warehouse.index')->with('message', "Nuovo Prodotto $validated[name] inserito!");
     }
 
     /**
@@ -152,7 +152,7 @@ class WarehouseController extends Controller
         ]);
 
         $product->update($validated);
-        return redirect()->route('warehouse.index')->with('message', "$validated[name] modificato con successo!");
+        return redirect()->route('admin.warehouse.index')->with('message', "$validated[name] modificato con successo!");
     }
 
     /**
