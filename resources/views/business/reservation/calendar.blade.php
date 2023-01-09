@@ -295,7 +295,8 @@
                                     if (pv.duration <= minute || minute == null) {
                                         providers.push(pv);
                                         optionProvider +=  '<option value=' + pv.id + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
-
+                                    } else if (minute == 0) {
+                                        providers.push(pv);
                                     }
                                     providersDuration.push(pv.duration);
 
