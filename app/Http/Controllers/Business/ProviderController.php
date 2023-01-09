@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Provider;
 use App\Models\Business;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-
 class ProviderController extends Controller
 {
     /**
@@ -17,9 +15,9 @@ class ProviderController extends Controller
      */
     public function index(Request $request, Business $business)
     {
-        $businessId = auth()->user()->business->pluck('id')->toArray();
-        $adminProvider = Business::whereId($businessId[0])->with('providers')->get()->pluck('providers')->first();
-        $businessProviders = Provider::where('business_id', $businessId[0])->get();
+        $businessId = auth()->user()->business->pluck('id')->first();
+        $adminProvider = Business::whereId($businessId)->with('providers')->get()->pluck('providers')->first();
+        $businessProviders = Provider::whereBusinessId($businessId)->get();
         $providers = $adminProvider->merge($businessProviders);
 
         $allAdminProvider = Provider::whereBusinessId(1)->get()->pluck('id')->toArray();
