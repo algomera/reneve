@@ -58,12 +58,12 @@
                                 <div class="flex flex-col justify-start gap-4">
                                     <div>
                                         <x-input-label for="start_time" :value="__('inizio')" class="w-fit" />
-                                        <x-text-input id="start_time" class="block mt-1 w-full" type="datetime-local" placeholder="01/01/2023" pattern="[0-9\./\]+" name="start_time" :value="old('start_time')" autofocus />
+                                        <x-text-input  id="start_time" class="block mt-1 w-full" type="datetime-local" placeholder="01/01/2023" pattern="[0-9\./\]+" name="start_time" :value="old('start_time')" autofocus />
                                         <x-input-error :messages="$errors->get('start_time')" class="mt-2" />
                                     </div>
                                     <div>
                                         <x-input-label for="finish_time" :value="__('fine')" class="w-fit" />
-                                        <x-text-input id="finish_time" class="block mt-1 w-full" type="datetime-local" placeholder="01/01/2023" pattern="[0-9\./\]+" name="finish_time" :value="old('finish_time')" autofocus />
+                                        <x-text-input  id="finish_time" class="block mt-1 w-full" type="datetime-local" placeholder="01/01/2023" pattern="[0-9\./\]+" name="finish_time" :value="old('finish_time')" autofocus />
                                         <x-input-error :messages="$errors->get('finish_time')" class="mt-2" />
                                     </div>
                                     <div>
@@ -99,7 +99,7 @@
                                 Chiudi
                             </span>
                             <div class="flex flex-col gap-3">
-                                <button type="submit" class="conferma hidden  px-7 py-3 bg-black text-[13px] text-white font-bold uppercase tracking-[0.75px]">
+                                <button type="submit" class="conferma hidden px-7 py-3 bg-black text-[13px] text-white font-bold uppercase tracking-[0.75px]">
                                     Conferma
                                 </button>
                                 <span class="delete px-7 py-3 bg-red-500 text-[13px] text-white font-bold uppercase hover:bg-red-500/80 tracking-[0.75px]">
@@ -123,6 +123,7 @@
             // Close Modal info
             document.querySelector('.chiudi').addEventListener('click', e => {
                 document.querySelector('#modal-info').classList.toggle('hidden');
+                document.querySelector('.delete').classList.add('invisible');
                 if (document.querySelector('.delete').classList.contains('hidden')) {
                     document.querySelector('.conferma').classList.add('hidden');
                     document.querySelector('.delete').classList.remove('hidden');
@@ -135,9 +136,26 @@
                 const valueProvider = provider.options[provider.selectedIndex].value;
                 let duration;
 
+                // get provider duration from id
+                let requestDuration = function() {
+                    $.ajax({
+                        url: "http://127.0.0.1:8000/api/provider",
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data){
+                            duration = data[valueProvider*1 -1].duration;
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    });
+                    return duration;
+                }();
+
                 //Set input finish DateTime
                 var start = moment(document.querySelector('#start_time').value, 'YYYY-MM-DDTHH:mm');
-                var finish = start.add(valueProvider,'m').format('YYYY-MM-DDTHH:mm');
+                var finish = start.add(duration,'m').format('YYYY-MM-DDTHH:mm');
                 document.querySelector('#finish_time').value = finish;
             };
 
@@ -188,7 +206,7 @@
                             eventMaxStack: 10,
 
                             // funtion open modal Reservation, set start, verify free collaborator
-                            dateClick: function(date, allDay, jsEvent, view) {
+                            dateClick: function(date) {
                                 // Set input start dateTime
                                 var i = date.date;
                                 document.querySelector('#start_time').value = i.toISOString().slice(0,16);
@@ -221,7 +239,8 @@
                                 });
 
                                 // function check minute free for new reservation
-                                dayEvents.forEach(function(event) {
+                                all_events.forEach(function(event) {
+
                                     //verify current reservation from hour clicked
                                     if (event.startStr <= date.dateStr && event.endStr > date.dateStr) {
                                         current.push(event)
@@ -275,7 +294,7 @@
                                 @json($providers).forEach(function(pv) {
                                     if (pv.duration <= minute || minute == null) {
                                         providers.push(pv);
-                                        optionProvider +=  '<option value=' + pv.duration + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
+                                        optionProvider +=  '<option value=' + pv.id + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
 
                                     }
                                     providersDuration.push(pv.duration);
@@ -304,9 +323,9 @@
                                 } else if (minute < min && minute != null || minuteRemaining < min) {
                                     alert('Il tempo rimanente in questa fascia oraria e insufficente per inserire nuove prenotazioni!')
                                 } else {
-                                    document.querySelector('#reservation').classList.toggle('hidden');
+                                    document.querySelector('#reservation').classList.toggle('hidden'); // open Modal reservation
                                 }
-                                // console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining, ' | servizi possibili:', providers);
+                                console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining, ' | servizi possibili:', providers);
                             },
 
                             // Show info event clicked
@@ -359,20 +378,26 @@
                             '<b>Fine: </b>' + formatDate(event.event.end)
                         ;
 
+                        if (moment(event.event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD') ) {
+                            document.querySelector('.delete').classList.remove('invisible');
+                        };
+
                         // delete event
                         $('.delete').click(function() {
-                            document.querySelector('.delete').classList.add('hidden');
-                            document.querySelector('.conferma').classList.remove('hidden');
-
-                            $('.conferma').click(function() {
-                                var id = event.event.id;
-                                const form = document.querySelector('#delete');
-
-                                form.setAttribute("action", "{{ route('business.reservation.destroy', '') }}" +'/'+ id);
-                                document.querySelector('#modal-info').classList.toggle('hidden');
+                            if (moment(event.event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD') ) {
                                 document.querySelector('.delete').classList.add('hidden');
-                            });
-                        })
+                                document.querySelector('.conferma').classList.remove('hidden');
+
+                                $('.conferma').click(function() {
+                                    var id = event.event.id;
+                                    const form = document.querySelector('#delete');
+
+                                    form.setAttribute("action", "{{ route('business.reservation.destroy', '') }}" +'/'+ id);
+                                    document.querySelector('#modal-info').classList.toggle('hidden');
+                                    document.querySelector('.delete').classList.add('hidden');
+                                });
+                            }
+                        });
                     },
 
                     events: @json($events),
