@@ -34,6 +34,7 @@ class BusinessController extends Controller
             'created_at',
             'deleted_at',
         ])->withTrashed()->paginate($perPage);
+
         return view('admin.business.index', compact('businesses', 'perPage'));
     }
 
@@ -225,12 +226,21 @@ class BusinessController extends Controller
     public function destroy($id, Request $request)
     {
         $business = Business::withTrashed()->find($id);
+        $users = $business->user()->withTrashed()->get()->toArray();
 
         if ($request->hard) {
             $business->forceDelete();
+            foreach ($users as $user) {
+                $x = User::withTrashed()->find($user['id']);
+                $x->forceDelete();
+            }
             Storage::disk('public')->deleteDirectory('business-'.$id);
         } else {
             $business->delete();
+            foreach ($users as $user) {
+                $x = User::withTrashed()->find($user['id']);
+                $x->delete();
+            }
         }
         return redirect()->route('admin.business.index')->with('message', $request->hard ? "L'azienda è stata eliminata definitivamente!" : "L'azienda è stata eliminata!");
     }
@@ -243,7 +253,15 @@ class BusinessController extends Controller
      */
     public function restore($id)
     {
-        Business::withTrashed()->find($id)->restore();
+        $business = Business::withTrashed()->find($id);
+        $business->restore();
+        $users = $business->user()->withTrashed()->get()->toArray();
+
+        foreach ($users as $user) {
+            $x = User::withTrashed()->find($user['id']);
+            $x->restore();
+        }
+
         return redirect()->route('admin.business.index')->with('message', "azienda ripristinata!");
     }
 }
