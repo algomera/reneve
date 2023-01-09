@@ -246,11 +246,10 @@
                                         current.push(event)
                                     }
 
-                                    if (date.dateStr < event.startStr) {
-
+                                    if (date.dateStr <= event.startStr) {
                                         while (slot.length < col) {
 
-                                            if (eventFuture.length >= col) {
+                                            if (eventFuture.length >= col && current.length < col) {
                                                 dayEvents.forEach(function(event) {
                                                     //check reservation to slot Time
                                                     if (moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') <= start.format('YYYY-MM-DDTHH:mm') && moment(event.endStr, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm') > start.format('YYYY-MM-DDTHH:mm')) {
@@ -258,7 +257,7 @@
                                                         if (!slot.includes(event.id)) {
                                                             // insert to array
                                                             slot.push(event.id);
-                                                            // console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
+                                                             console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
                                                         }
                                                     }
                                                 });
@@ -297,6 +296,7 @@
                                         optionProvider +=  '<option value=' + pv.id + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
                                     } else if (minute == 0) {
                                         providers.push(pv);
+                                        optionProvider +=  '<option value=' + pv.id + ' class="capitalize font-medium">' + pv.name + ' (' + pv.duration +' Min) ' + '</option>'
                                     }
                                     providersDuration.push(pv.duration);
 
