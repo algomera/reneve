@@ -141,6 +141,8 @@ class BusinessController extends Controller
      */
     public function edit(Business $business)
     {
+        //dd($business->providers()->get());
+
         $id = auth()->user()->id;
         $providers = Provider::where('business_id', $id)->get();
         $user = $business->user()->whereRole('business')->first();

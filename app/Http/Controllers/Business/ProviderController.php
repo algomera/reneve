@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
+use App\Models\Business;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProviderController extends Controller
 {
@@ -13,16 +15,16 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Business $business)
     {
-        $perPage = 10;
-        if($request->get('perPage')) {
-            $perPage = $request->get('perPage');
-        }
+        $businessId = auth()->user()->business->pluck('id')->toArray();
+        $adminProvider = Business::whereId($businessId[0])->with('providers')->get()->pluck('providers')->first();
+        $businessProviders = Provider::where('business_id', $businessId[0])->get();
+        $providers = $adminProvider->merge($businessProviders);
 
-        $providers = Provider::whereBusinessId(1)->paginate($perPage);
+        $allAdminProvider = Provider::whereBusinessId(1)->get()->pluck('id')->toArray();
 
-        return view('admin.provider.index', compact('providers', 'perPage'));
+        return view('business.provider.index', compact('providers', 'allAdminProvider'));
     }
 
     /**
@@ -32,7 +34,7 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        return view('admin.provider.create');
+        return view('business.provider.create');
     }
 
     /**
@@ -52,11 +54,12 @@ class ProviderController extends Controller
             'price' => ['required', 'numeric'],
         ]);
 
-        $validate['business_id'] = 1;
+        $businessId = auth()->user()->business->pluck('id')->toArray();
+        $validate['business_id'] = $businessId[0];
 
         Provider::create($validate);
 
-        return redirect()->route('admin.service.index')->with('message', 'Nuovo servizio inserito!');
+        return redirect()->route('business.provider.index')->with('message', 'Nuovo servizio inserito!');
     }
 
     /**
@@ -68,8 +71,7 @@ class ProviderController extends Controller
     public function show($id)
     {
         $provider = Provider::find($id);
-        return view('admin.provider.show', compact('provider'));
-
+        return view('business.provider.show', compact('provider'));
     }
 
     /**
@@ -81,7 +83,7 @@ class ProviderController extends Controller
     public function edit($id)
     {
         $provider = Provider::find($id);
-        return view('admin.provider.edit', compact('provider'));
+        return view('business.provider.edit', compact('provider'));
     }
 
     /**
@@ -105,7 +107,7 @@ class ProviderController extends Controller
 
         $provider->update($validate);
 
-        return redirect()->route('admin.service.index')->with('message', "Servizio $provider->name modificato!");
+        return redirect()->route('business.provider.index')->with('message', "Servizio $provider->name modificato!");
     }
 
     /**
