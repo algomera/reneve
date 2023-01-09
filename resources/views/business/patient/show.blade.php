@@ -94,11 +94,13 @@
                             <span><strong>Fototipo:</strong> {{ $user->skin}}</span>
                             <div>
                                 <strong>Tipo di pelle:</strong>
-                                @foreach ($types as $type)
-                                    <span class="capitalize">
-                                        {{$type}},
-                                    </span>
-                                @endforeach
+                                @if ($types)
+                                    @foreach ($types as $type)
+                                        <span class="capitalize">
+                                            {{$type}},
+                                        </span>
+                                    @endforeach
+                                @endif
                             </div>
                             <span><strong>Inestetesmi viso:</strong>@if($user->skin_blemishes) {{$user->skin_blemishes}} @else Nessuna @endif </span>
                             <span><strong>Inestetismi corpo:</strong>@if($user->body_blemishes) {{$user->body_blemishes}} @else Nessuna @endif </span>
