@@ -257,7 +257,7 @@
                                                         if (!slot.includes(event.id)) {
                                                             // insert to array
                                                             slot.push(event.id);
-                                                             console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
+                                                            //  console.log('push: ' + moment(event.startStr, 'YYYY-MM-DDTHH:mm').format('HH:mm'), ' | evento numero: ' + event.id);
                                                         }
                                                     }
                                                 });
@@ -328,7 +328,7 @@
                                 } else {
                                     document.querySelector('#reservation').classList.toggle('hidden'); // open Modal reservation
                                 }
-                                console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining, ' | servizi possibili:', providers);
+                                // console.log('prenotazioni: ' + slot.length, ' | minuti disponibili: ' + minute, ' | minuti restanti alla giornata: ' + minuteRemaining, ' | servizi possibili:', providers);
                             },
 
                             // Show info event clicked
