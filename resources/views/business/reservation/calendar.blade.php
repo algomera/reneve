@@ -320,7 +320,9 @@
                                     alert('Le prenotazioni per questo orario sono piene!');
                                 } else if (moment().format('YYYY-MM-DD') > date.dayEl.attributes[1].value) {
                                     alert('Non si possono inserire prenotazioni in date gia trascorse!')
-                                } else if (minute < min && minute != null || minuteRemaining < min) {
+                                } else if (all_events.length < 1) {
+                                    document.querySelector('#reservation').classList.toggle('hidden'); // open Modal reservation
+                                } else if (minute < min && minute != null || minuteRemaining < min ) {
                                     alert('Il tempo rimanente in questa fascia oraria e insufficente per inserire nuove prenotazioni!')
                                 } else {
                                     document.querySelector('#reservation').classList.toggle('hidden'); // open Modal reservation
