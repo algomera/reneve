@@ -122,7 +122,7 @@
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full">
         <button onclick="dropdown4()" class="{{request()->routeIs('business.warehouse.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
             <p class="leading-5 capitalize text-[18px] font-semibold">Magazzino</p>
-            <i id="icon4" class="fa-solid fa-chevron-down"></i>
+            <i id="icon4" class="fa-solid fa-chevron-up"></i>
         </button>
 
         <div id="menu4" class="{{request()->routeIs('business.warehouse.*') ? 'block': 'hidden'}} pb-3">
@@ -160,7 +160,7 @@
             </x-nav-link>
             <x-nav-link
                 class="uppercase text-[12px] font-bold flex jusitfy-center items-center gap-3 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 ml-4 !pb-0 !pt-1 mt-1"
-                :href="route('business.patient.create')" :active="request()->routeIs('')"
+                :href="route('business.collaborator.create')" :active="request()->routeIs('business.collaborator.create')"
             >
                 <i class="fa-solid fa-plus"></i>
                 {{ __('Aggiungi') }}

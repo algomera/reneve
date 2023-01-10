@@ -144,7 +144,7 @@ class PatientController extends Controller
             'body_blemishes' => ['nullable', 'string'],
             'solar_lamp' => ['nullable', 'boolean'],
         ]);
-        $validated['role'] = 'patient';
+
         $validated['foreigner'] = $request->boolean('foreigner');
         $validated['adipe'] = $request->boolean('adipe');
         $validated['skin_relax'] = $request->boolean('skin_relax');

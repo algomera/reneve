@@ -15,7 +15,10 @@ class CollaboratorController extends Controller
      */
     public function index()
     {
-        return view('business.collaborator.index');
+        $business = auth()->user()->business->first();
+        $collaborators = $business->user()->whereRole('collaborator')->get();
+
+        return view('business.collaborator.index', compact('collaborators'));
     }
 
     /**
@@ -25,7 +28,7 @@ class CollaboratorController extends Controller
      */
     public function create()
     {
-        //
+        return view('business.collaborator.create');
     }
 
     /**
@@ -36,7 +39,39 @@ class CollaboratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'role' => ['required'],
+            'name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'date_of_birth' => ['nullable', 'string'],
+            'sex' => ['nullable', 'boolean'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'mobile_phone' => ['required', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'telephone' => ['nullable', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'email' => ['required', 'string', 'email', 'unique:users'],
+            'address' => ['nullable', 'string'],
+            'civic' => ['nullable', 'numeric'],
+            'city' => ['nullable', 'string'],
+            'province' => ['nullable', 'string'],
+            'cap' => ['nullable', 'numeric'],
+        ]);
+
+        $comb = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array();
+        $combLen = strlen($comb) - 1;
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $combLen);
+            $pass[] = $comb[$n];
+        }
+        $validated['password'] = implode($pass);
+
+        $collaborator = User::create($validated);
+
+        $business = auth()->user()->business->first();
+
+        $collaborator->business()->attach($business);
+
+        return redirect()->route('business.collaborator.index')->with('message', "Collaboratore $collaborator->name $collaborator->last_name registrato!");
     }
 
     /**
@@ -45,9 +80,11 @@ class CollaboratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user = User::find($id);
+
+        return view('business.collaborator.show', compact('user'));
     }
 
     /**
@@ -56,9 +93,11 @@ class CollaboratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        return view('business.collaborator.edit', compact('user'));
     }
 
     /**
@@ -68,9 +107,29 @@ class CollaboratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $validated = $request->validate([
+            'name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'date_of_birth' => ['nullable', 'string'],
+            'sex' => ['nullable', 'boolean'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'mobile_phone' => ['required', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'telephone' => ['nullable', 'string', 'regex:/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/'],
+            'email' => ['required', 'string', 'email', 'unique:users'],
+            'address' => ['nullable', 'string'],
+            'civic' => ['nullable', 'numeric'],
+            'city' => ['nullable', 'string'],
+            'province' => ['nullable', 'string'],
+            'cap' => ['nullable', 'numeric'],
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->route('business.collaborator.index')->with('message', "Collaboratore $user->name $user->last_name aggiornato!");
     }
 
     /**
@@ -79,8 +138,11 @@ class CollaboratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $collaborator = User::find($id);
+        $collaborator->delete();
+
+        return redirect()->back()->with('message', "Collaboratore $collaborator->last_name $collaborator->name eliminato!");
     }
 }
