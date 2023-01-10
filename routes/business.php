@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Business\CabinController;
 use App\Http\Controllers\Business\CalendarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Business\PageController as BusinessPageController;
@@ -24,4 +25,8 @@ Route::middleware(['auth', 'verified', 'VerifyIsBusiness'])->name('business.')->
     Route::resource('warehouse', WarehouseController::class);
 //Collaborator
     Route::resource('collaborator', CollaboratorController::class);
+//Cabin
+    Route::get('cabin', [CabinController::class, 'index'])->name('cabin.index');
+    Route::post('cabin', [CabinController::class, 'store'])->name('cabin.store');
+    Route::delete('cabin/{id}', [CabinController::class, 'destroy'])->name('cabin.destroy');
 });

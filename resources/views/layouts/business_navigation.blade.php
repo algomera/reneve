@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-900/90 flex-col">
+<nav x-data="{ open: false }" class="fixed transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-[#272E3B] flex-col">
 
     {{-- AZIENDA --}}
     <div class="flex justify-center p-6 items-center space-x-3 w-full">
@@ -50,7 +50,7 @@
 
     {{-- PAZIENTI --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown1()" class="{{request()->routeIs('business.patient.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
+        <button onclick="dropdown1()" class="{{request()->routeIs('business.patient.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Pazienti</p>
             <i id="icon1" class="fa-solid fa-chevron-down {{request()->routeIs('business.patient.*') ? 'rotate-180': ''}}"></i>
         </button>
@@ -75,7 +75,7 @@
 
     {{-- PRENOTAZIONI --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button class="{{request()->routeIs('business.calendar') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
+        <button class="{{request()->routeIs('business.calendar') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 ">
             <x-nav-link
             class="flex justify-between items-center gap-5 space-x-5 w-full rounded capitalize text-[18px] font-semibold"
             :href="route('business.calendar')"
@@ -88,7 +88,7 @@
 
     {{-- TRATTAMENTI --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full  ">
-        <button onclick="dropdown3()" class="{{request()->routeIs('business.provider.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
+        <button onclick="dropdown3()" class="{{request()->routeIs('business.provider.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Trattamenti</p>
             <i id="icon3" class="fa-solid fa-chevron-down"></i>
         </button>
@@ -120,9 +120,9 @@
 
     {{-- MAGAZZINO --}}
     <div class="flex flex-col justify-start items-center px-6 border-b border-gray-600 w-full">
-        <button onclick="dropdown4()" class="{{request()->routeIs('business.warehouse.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
+        <button onclick="dropdown4()" class="{{request()->routeIs('business.warehouse.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 ">
             <p class="leading-5 capitalize text-[18px] font-semibold">Magazzino</p>
-            <i id="icon4" class="fa-solid fa-chevron-up"></i>
+            <i id="icon4" class="fa-solid fa-chevron-down"></i>
         </button>
 
         <div id="menu4" class="{{request()->routeIs('business.warehouse.*') ? 'block': 'hidden'}} pb-3">
@@ -145,26 +145,37 @@
 
     {{-- COLLABORATORI --}}
     <div class="flex flex-col justify-start items-center px-6 w-full  ">
-        <button onclick="dropdown5()" class="{{request()->routeIs('business.collaborator.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5 space-x-14">
-            <p class="leading-5 capitalize text-[18px] font-semibold">Collaboratori</p>
+        <button onclick="dropdown5()" class="{{request()->routeIs('business.collaborator.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5">
+            <p class="leading-5 capitalize text-[18px] font-semibold">Collaboratori/Cabine</p>
             <i id="icon5" class="fa-solid fa-chevron-down"></i>
         </button>
 
         <div id="menu5" class="{{request()->routeIs('business.collaborator.*') ? 'block': 'hidden'}} pb-3">
-            <x-nav-link
-            class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
-            :href="route('business.collaborator.index')" :active="request()->routeIs('business.collaborator.index')"
-            >
-                <i class="fa-solid fa-list"></i>
-                {{ __('Lista') }}
-            </x-nav-link>
-            <x-nav-link
-                class="uppercase text-[12px] font-bold flex jusitfy-center items-center gap-3 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 ml-4 !pb-0 !pt-1 mt-1"
-                :href="route('business.collaborator.create')" :active="request()->routeIs('business.collaborator.create')"
-            >
-                <i class="fa-solid fa-plus"></i>
-                {{ __('Aggiungi') }}
-            </x-nav-link>
+            <div>
+                <x-nav-link
+                class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+                :href="route('business.collaborator.index')" :active="request()->routeIs('business.collaborator.index')"
+                >
+                    <i class="fa-solid fa-list"></i>
+                    {{ __('Lista Collaboratori') }}
+                </x-nav-link>
+                <x-nav-link
+                    class="uppercase text-[12px] font-bold flex jusitfy-center items-center gap-3 space-x-5 p-3 w-[55%] rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 ml-4 !pb-0 !pt-1 mt-1"
+                    :href="route('business.collaborator.create')" :active="request()->routeIs('business.collaborator.create')"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    {{ __('Aggiungi') }}
+                </x-nav-link>
+            </div>
+            <div class="mt-2">
+                <x-nav-link
+                class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
+                :href="route('business.cabin.index')" :active="request()->routeIs('')"
+                >
+                    <i class="fa-solid fa-list"></i>
+                    {{ __('Cabine') }}
+                </x-nav-link>
+            </div>
         </div>
     </div>
 </nav>
