@@ -143,14 +143,14 @@
         </div>
     </div>
 
-    {{-- COLLABORATORI --}}
+    {{-- COLLABORATORI/CABINE --}}
     <div class="flex flex-col justify-start items-center px-6 w-full  ">
-        <button onclick="dropdown5()" class="{{request()->routeIs('business.collaborator.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5">
+        <button onclick="dropdown5()" class="{{request()->routeIs('business.collaborator.*') ? 'text-[#6EA0FF]' : ''}} {{request()->routeIs('business.cabin.*') ? 'text-[#6EA0FF]' : ''}} focus:outline-none focus:text-[#6EA0FF] text-left  text-white flex justify-between items-center w-full py-5">
             <p class="leading-5 capitalize text-[18px] font-semibold">Collaboratori/Cabine</p>
             <i id="icon5" class="fa-solid fa-chevron-down"></i>
         </button>
 
-        <div id="menu5" class="{{request()->routeIs('business.collaborator.*') ? 'block': 'hidden'}} pb-3">
+        <div id="menu5" class="{{request()->routeIs('business.collaborator.*') ? '!block': ''}} {{request()->routeIs('business.cabin.*') ? '!block': ''}} hidden pb-3">
             <div>
                 <x-nav-link
                 class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
@@ -170,7 +170,7 @@
             <div class="mt-2">
                 <x-nav-link
                 class="flex jusitfy-center items-center gap-5 space-x-5 p-3 w-full rounded hover:text-white focus:bg-gray-700 text-gray-400 focus:text-white hover:bg-gray-700 !py-2"
-                :href="route('business.cabin.index')" :active="request()->routeIs('')"
+                :href="route('business.cabin.index')" :active="request()->routeIs('business.cabin.*')"
                 >
                     <i class="fa-solid fa-list"></i>
                     {{ __('Cabine') }}
