@@ -32,6 +32,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function getTotalAttribute() {
         $total= 0;
         foreach ($this->products()->withTrashed()->get() as $pr) {

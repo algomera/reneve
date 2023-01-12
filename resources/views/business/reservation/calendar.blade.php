@@ -196,6 +196,16 @@
                         startTime: '8:00',
                         endTime: '20:00',
                     },
+                    eventConstraint: {
+                        daysOfWeek: [ 0 ],
+                        startTime: '8:00',
+                        endTime: '20:00',
+                    },
+                    selectConstraint: {
+                        daysOfWeek: [ 0 ],
+                        startTime: '8:00',
+                        endTime: '20:00',
+                    },
                     views: {
                         dayGridMonth: {
                             dayMaxEventRows: 5,

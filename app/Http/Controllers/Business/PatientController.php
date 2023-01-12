@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
@@ -189,7 +189,9 @@ class PatientController extends Controller
 
         $types = json_decode($user->skin_type);
 
-        return view('business.patient.show', compact('user', 'types'));
+        $reservations = Reservation::whereUserId($id)->with('provider', 'cabin')->get();
+        // dd($reservations);
+        return view('business.patient.show', compact('user', 'types', 'reservations'));
     }
 
     /**
